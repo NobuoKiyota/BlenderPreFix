@@ -1,6 +1,12 @@
-﻿ai_archives/
+ai_archives/
 catalog/assets/
+scratch/
 *.glb
 *.png
 *.zip
+*.fbx
+*.blend
+*.blend1
 __pycache__/
+catalog_body.txt
+rock_dump.txt
