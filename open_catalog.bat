@@ -1,0 +1,3 @@
+@echo off
+echo Starting Blender Skill & Procedural Catalog...
+start "" "%~dp0catalog\index.html"

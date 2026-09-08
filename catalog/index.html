@@ -1,0 +1,562 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blender Skill & Procedural Catalog - 自走学習成果ポータル</title>
+  <!-- Google model-viewer for 3D GLB preview -->
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+  <style>
+    :root {
+      --bg-dark: #121316;
+      --bg-panel: #1a1c23;
+      --bg-card: #222530;
+      --accent: #ea7600; /* Blender Orange */
+      --accent-hover: #ff8c1a;
+      --accent-cyan: #00d2ff;
+      --text-main: #f0f2f5;
+      --text-muted: #9ba1b0;
+      --border: #2d3142;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+    header {
+      background: var(--bg-panel);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      background: var(--accent);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .brand h1 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .badge {
+      background: rgba(234, 118, 0, 0.2);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+    .stats {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .main-container {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+    /* Left Sidebar: List */
+    .sidebar {
+      width: 340px;
+      background: var(--bg-panel);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
+    .search-box {
+      padding: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .search-box input {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 8px 12px;
+      border-radius: 6px;
+      outline: none;
+      font-size: 0.9rem;
+    }
+    .item-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .item-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      gap: 12px;
+    }
+    .item-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .item-card.active {
+      border-color: var(--accent);
+      background: rgba(234, 118, 0, 0.1);
+    }
+    .item-thumb {
+      width: 72px;
+      height: 72px;
+      border-radius: 6px;
+      object-fit: cover;
+      background: #000;
+    }
+    .item-meta {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .item-category {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      color: var(--accent-cyan);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .item-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    .item-tags {
+      display: flex;
+      gap: 6px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Right Main Content: Detail View */
+    .content-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .detail-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .detail-title h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .detail-title p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* 3D & Media Section */
+    .preview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      height: 380px;
+    }
+    .viewer-box {
+      background: #0d0e12;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    model-viewer {
+      width: 100%;
+      height: 100%;
+      --poster-color: transparent;
+    }
+    .viewer-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(0,0,0,0.7);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+    .render-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Info Sections */
+    .section-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .section-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .markdown-body {
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: #cfd3dc;
+    }
+    .markdown-body ul {
+      margin-left: 20px;
+      margin-top: 8px;
+    }
+    .markdown-body li {
+      margin-bottom: 6px;
+    }
+    .source-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      color: var(--text-main);
+      text-decoration: none;
+      margin-top: 8px;
+    }
+    .source-chip:hover {
+      border-color: var(--accent);
+    }
+
+    /* Code Block */
+    .code-container {
+      position: relative;
+      background: #090a0d;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .code-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 14px;
+      background: #14161d;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .copy-btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .copy-btn:hover {
+      background: var(--accent-hover);
+    }
+    pre code {
+      display: block;
+      padding: 14px;
+      font-family: "Fira Code", Consolas, Monaco, monospace;
+      font-size: 0.82rem;
+      line-height: 1.5;
+      color: #e2e8f0;
+      overflow-x: auto;
+      max-height: 300px;
+    }
+
+    /* Audio / Game Integration Table */
+    .audio-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin-top: 10px;
+    }
+    .audio-table th, .audio-table td {
+      border: 1px solid var(--border);
+      padding: 8px 12px;
+      text-align: left;
+    }
+    .audio-table th {
+      background: var(--bg-card);
+      color: var(--accent-cyan);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <div class="brand-logo">B</div>
+      <div>
+        <h1>Blender Procedural Knowledge & VFX Vault</h1>
+      </div>
+      <span class="badge">自走学習成果カタログ</span>
+    </div>
+    <div class="stats" id="catalog-stats">
+      登録スキル: 2件 | Blender 5.2.1 LTS
+    </div>
+  </header>
+
+  <div class="main-container">
+    <!-- Left Sidebar -->
+    <div class="sidebar">
+      <div class="search-box">
+        <input type="text" id="search-input" placeholder="スキル・エフェクトを検索..." oninput="filterItems()">
+      </div>
+      <div class="item-list" id="item-list">
+        <!-- JS generates item cards here -->
+      </div>
+    </div>
+
+    <!-- Right Content Area -->
+    <div class="content-area" id="detail-view">
+      <!-- Detailed item content renders here -->
+    </div>
+  </div>
+
+  <script>
+    const CATALOG_DATA = [
+      {
+        id: "campfire_vfx",
+        title: "スタイライズド焚き火 VFX (Stylized Campfire)",
+        category: "VFX / エフェクト",
+        tags: ["Flame", "Sparks", "Displacement", "Emission"],
+        thumb: "assets/campfire_vfx.png",
+        glb: "assets/campfire_vfx.glb",
+        png: "assets/campfire_vfx.png",
+        summary: "放射状に配置された薪、有機的に揺らめくスタイライズド火炎メッシュ、舞い上がる発光火の粉（Sparks）を一発生成するVFXアセット。",
+        source: {
+          title: "Blender Stylized Fire & Campfire Tutorial (E:\\BlenderVFX 資産統合)",
+          url: "https://www.youtube.com/results?search_query=blender+stylized+fire+tutorial"
+        },
+        techniques: [
+          "**幾何学変形**: Cone（円錐）ベースに Subdivision + Clouds Noise による Displace Modifier を適用し、有機的な火炎形状をプロシージャル生成",
+          "**マテリアル設計**: Stylized_Flame_Mat による高輝度 Emission (強度 3.5) と暖色グラデーション",
+          "**火の粉散布**: ランダム配置された Icosphere 群に超高輝度 Spark_Emission_Mat (強度 8.0) を適用",
+          "**薪配置**: 6本のシリンダーを放射状＋傾きをつけて自動クロス配置"
+        ],
+        soundMapping: [
+          { slot: "Stylized_Flame_Mat", surface: "Fire", audio: "Sound_Campfire_Loop", event: "焚き火ループ環境音 (Wwise/ADX2)" },
+          { slot: "Charred_Wood_Mat", surface: "Wood", audio: "Footstep_Wood_Charred", event: "木材接触・炭化足音" },
+          { slot: "Spark_Emission_Mat", surface: "Fire", audio: "Sound_Ember_Crack", event: "パチパチ爆ぜる火花ワンショット" }
+        ],
+        scriptPath: "generators/gen_campfire_vfx.py",
+        codeSnippet: `import bpy, sys
+# Blender 5.2/3.6 のスクリプトエディタで実行するだけで一発生成
+exec(open(r"e:/BlenderPreFix/generators/gen_campfire_vfx.py", encoding="utf-8").read())`
+      },
+      {
+        id: "crystal_cluster",
+        title: "プロシージャル水晶クラスタ (Crystal Cluster)",
+        category: "3Dオブジェクト / 鉱石",
+        tags: ["Procedural Bmesh", "IOR 1.54", "Transmission", "Rock Base"],
+        thumb: "assets/crystal_cluster.png",
+        glb: "assets/crystal_cluster.glb",
+        png: "assets/crystal_cluster.png",
+        summary: "Bmeshによる六角柱ピラミッド結晶のプロシージャル生成、ランダムクラスタリング、岩石台座と物理屈折シェーダーを備えた鉱石アセット。",
+        source: {
+          title: "Blender Procedural Crystal Cluster Tutorial (Sacoche Ito & Mdesign 技法統合)",
+          url: "https://www.youtube.com/results?search_query=blender+procedural+crystals"
+        },
+        techniques: [
+          "**Bmesh アルゴリズム**: 六角柱（Segments=6）から先端に向かって自然にオフセット収束するピラミッド錐体を完全プログラマブル生成",
+          "**物理シェーダー**: 水晶固有の屈折率 IOR 1.544、Transmission 0.92、微発光（Emission）による神秘的な鉱石質感",
+          "**ファセット維持**: `poly.use_smooth = False` により、宝石・結晶特有のシャープな多面体エッジを表現",
+          "**台座のプロシージャル岩**: Voronoi Noise + Displace Modifier による凹凸ソリッド岩石の自動融合"
+        ],
+        soundMapping: [
+          { slot: "Crystal_Gem_Mat", surface: "Crystal", audio: "Footstep_Glass", event: "高硬度クリスタル接触音・硬質反射" },
+          { slot: "Base_Rock_Mat", surface: "Stone", audio: "Footstep_Stone", event: "硬い岩石の足音・破砕音" }
+        ],
+        scriptPath: "generators/gen_crystal_cluster.py",
+        codeSnippet: `import bpy, sys
+# Blender 5.2/3.6 のスクリプトエディタで実行するだけで一発生成
+exec(open(r"e:/BlenderPreFix/generators/gen_crystal_cluster.py", encoding="utf-8").read())`
+      }
+    ];
+
+    let currentItem = CATALOG_DATA[0];
+
+    function renderList(items) {
+      const listContainer = document.getElementById("item-list");
+      listContainer.innerHTML = "";
+      items.forEach(item => {
+        const card = document.createElement("div");
+        card.className = `item-card ${item.id === currentItem.id ? 'active' : ''}`;
+        card.onclick = () => selectItem(item);
+        card.innerHTML = `
+          <img class="item-thumb" src="${item.thumb}" alt="${item.title}">
+          <div class="item-meta">
+            <div class="item-category">${item.category}</div>
+            <div class="item-title">${item.title}</div>
+            <div class="item-tags">${item.tags.join(" • ")}</div>
+          </div>
+        `;
+        listContainer.appendChild(card);
+      });
+    }
+
+    function selectItem(item) {
+      currentItem = item;
+      renderList(CATALOG_DATA);
+      renderDetail(item);
+    }
+
+    function renderDetail(item) {
+      const detailContainer = document.getElementById("detail-view");
+      
+      const soundRows = item.soundMapping.map(s => `
+        <tr>
+          <td><code>${s.slot}</code></td>
+          <td><span class="badge" style="background: rgba(0,210,255,0.1); color: var(--accent-cyan); border-color: var(--accent-cyan);">${s.surface}</span></td>
+          <td><code>${s.audio}</code></td>
+          <td>${s.event}</td>
+        </tr>
+      `).join("");
+
+      const techList = item.techniques.map(t => `<li>${t}</li>`).join("");
+
+      detailContainer.innerHTML = `
+        <div class="detail-header">
+          <div class="detail-title">
+            <h2>${item.title}</h2>
+            <p>${item.summary}</p>
+          </div>
+          <span class="badge">${item.category}</span>
+        </div>
+
+        <!-- 3D & Image Preview Grid -->
+        <div class="preview-grid">
+          <div class="viewer-box">
+            <span class="viewer-tag">🎮 3D インタラクティブ (ドラッグ回転 / ホイール拡縮)</span>
+            <model-viewer 
+              src="${item.glb}" 
+              alt="${item.title}" 
+              auto-rotate 
+              camera-controls 
+              shadow-intensity="1" 
+              exposure="1.2">
+            </model-viewer>
+          </div>
+          <div class="viewer-box">
+            <span class="viewer-tag">📷 Blender レンダリング結果</span>
+            <img class="render-img" src="${item.png}" alt="${item.title}">
+          </div>
+        </div>
+
+        <!-- Techniques Section -->
+        <div class="section-card">
+          <div class="section-title">💡 技法解説 ＆ ノード設計のポイント</div>
+          <div class="markdown-body">
+            <ul>${techList}</ul>
+          </div>
+          <a class="source-chip" href="${item.source.url}" target="_blank">
+            🔗 参照元チュートリアル: ${item.source.title}
+          </a>
+        </div>
+
+        <!-- Audio & Surface ID Section -->
+        <div class="section-card">
+          <div class="section-title">🔊 ゲームエンジン ＆ サウンド連動仕様 (Wwise / CRI / Unity / UE)</div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">
+            各マテリアルスロットはゲーム内の Surface ID に直接マッピングされ、足音や接触音、環境音イベントを即座に紐付け可能です。
+          </p>
+          <table class="audio-table">
+            <thead>
+              <tr>
+                <th>マテリアルスロット</th>
+                <th>Surface ID</th>
+                <th>オーディオタグ</th>
+                <th>連動サウンド機能</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${soundRows}
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Instant Generation Code -->
+        <div class="section-card">
+          <div class="section-title">⚡ 一発生成コード (One-Click Generation)</div>
+          <div class="code-container">
+            <div class="code-header">
+              <span>Blender Python API (実行ファイル: ${item.scriptPath})</span>
+              <button class="copy-btn" onclick="copyCode()">📋 コードをコピー</button>
+            </div>
+            <pre><code id="code-snippet">${item.codeSnippet}</code></pre>
+          </div>
+        </div>
+      `;
+    }
+
+    function copyCode() {
+      const code = document.getElementById("code-snippet").innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        const btn = document.querySelector(".copy-btn");
+        const orig = btn.innerText;
+        btn.innerText = "✅ コピー完了！";
+        setTimeout(() => btn.innerText = orig, 2000);
+      });
+    }
+
+    function filterItems() {
+      const q = document.getElementById("search-input").value.toLowerCase();
+      const filtered = CATALOG_DATA.filter(item => 
+        item.title.toLowerCase().includes(q) || 
+        item.category.toLowerCase().includes(q) || 
+        item.tags.some(t => t.toLowerCase().includes(q))
+      );
+      renderList(filtered);
+    }
+
+    // Initialize
+    renderList(CATALOG_DATA);
+    renderDetail(currentItem);
+  </script>
+</body>
+</html>
