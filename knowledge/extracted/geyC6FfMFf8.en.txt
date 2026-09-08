@@ -1,0 +1,1124 @@
+
+[00:00:00] hello everyone and welcome to another 
+[00:00:01] hello everyone and welcome to another 
+[00:00:01] hello everyone and welcome to another blender made easy tutorial today i'll be 
+[00:00:03] blender made easy tutorial today i'll be 
+[00:00:03] blender made easy tutorial today i'll be showing you how to create this book 
+[00:00:05] showing you how to create this book 
+[00:00:05] showing you how to create this book opening animation in blender this is 
+[00:00:07] opening animation in blender this is 
+[00:00:07] opening animation in blender this is actually pretty easy to create and we're 
+[00:00:09] actually pretty easy to create and we're 
+[00:00:09] actually pretty easy to create and we're going to be covering a variety of topics 
+[00:00:10] going to be covering a variety of topics 
+[00:00:10] going to be covering a variety of topics including constraints animation and a 
+[00:00:12] including constraints animation and a 
+[00:00:12] including constraints animation and a couple other things so let's go ahead 
+[00:00:15] couple other things so let's go ahead 
+[00:00:15] couple other things so let's go ahead and get started 
+[00:00:16] and get started 
+[00:00:16] and get started the first thing i'm going to do of 
+[00:00:17] the first thing i'm going to do of 
+[00:00:17] the first thing i'm going to do of course is delete the default cube so 
+[00:00:19] course is delete the default cube so 
+[00:00:19] course is delete the default cube so make sure it's selected and delete it 
+[00:00:21] make sure it's selected and delete it 
+[00:00:21] make sure it's selected and delete it then what you can do is shift a and add 
+[00:00:22] then what you can do is shift a and add 
+[00:00:22] then what you can do is shift a and add in a new cube we're going to be modeling 
+[00:00:25] in a new cube we're going to be modeling 
+[00:00:25] in a new cube we're going to be modeling a very basic book right here it's not 
+[00:00:27] a very basic book right here it's not 
+[00:00:27] a very basic book right here it's not going to be a very complex it's just 
+[00:00:28] going to be a very complex it's just 
+[00:00:28] going to be a very complex it's just going to be three different cubes so 
+[00:00:30] going to be three different cubes so 
+[00:00:30] going to be three different cubes so with this first cube selected i'm going 
+[00:00:32] with this first cube selected i'm going 
+[00:00:32] with this first cube selected i'm going to press n and go over to the dimensions 
+[00:00:34] to press n and go over to the dimensions 
+[00:00:34] to press n and go over to the dimensions tab 
+[00:00:35] tab 
+[00:00:35] tab the dimensions of this cube is going to 
+[00:00:37] the dimensions of this cube is going to 
+[00:00:37] the dimensions of this cube is going to be 0.2 for the x and 
+[00:00:40] be 0.2 for the x and 
+[00:00:40] be 0.2 for the x and .05 for the z 
+[00:00:42] .05 for the z 
+[00:00:42] .05 for the z this is going to be a pretty thin cube 
+[00:00:44] this is going to be a pretty thin cube 
+[00:00:44] this is going to be a pretty thin cube and this is going to be the spine of the 
+[00:00:46] and this is going to be the spine of the 
+[00:00:46] and this is going to be the spine of the book 
+[00:00:47] book 
+[00:00:47] book next up i'm going to go into top view 
+[00:00:49] next up i'm going to go into top view 
+[00:00:49] next up i'm going to go into top view and shift d it this is going to be the 
+[00:00:52] and shift d it this is going to be the 
+[00:00:52] and shift d it this is going to be the right cover so i'm going to name this 
+[00:00:54] right cover so i'm going to name this 
+[00:00:54] right cover so i'm going to name this cover and then right and we'll select 
+[00:00:56] cover and then right and we'll select 
+[00:00:56] cover and then right and we'll select the other cube and we'll just call this 
+[00:00:58] the other cube and we'll just call this 
+[00:00:58] the other cube and we'll just call this spine 
+[00:01:01] spine 
+[00:01:01] spine with the cover right the x dimension is 
+[00:01:03] with the cover right the x dimension is 
+[00:01:03] with the cover right the x dimension is going to be a little bit bigger we're 
+[00:01:04] going to be a little bit bigger we're 
+[00:01:04] going to be a little bit bigger we're going to go with 1.5 for the x then 
+[00:01:07] going to go with 1.5 for the x then 
+[00:01:07] going to go with 1.5 for the x then let's move it into place so press g and 
+[00:01:09] let's move it into place so press g and 
+[00:01:09] let's move it into place so press g and x holding control and shift you can 
+[00:01:12] x holding control and shift you can 
+[00:01:12] x holding control and shift you can place it right next to it just like that 
+[00:01:15] place it right next to it just like that 
+[00:01:15] place it right next to it just like that let's shift d this and place it on the 
+[00:01:17] let's shift d this and place it on the 
+[00:01:17] let's shift d this and place it on the other side and we're going to call this 
+[00:01:19] other side and we're going to call this 
+[00:01:19] other side and we're going to call this one cover and then left 
+[00:01:21] one cover and then left 
+[00:01:22] one cover and then left now that we have all of our objects in 
+[00:01:23] now that we have all of our objects in 
+[00:01:23] now that we have all of our objects in our scene let's work on the rotation of 
+[00:01:25] our scene let's work on the rotation of 
+[00:01:25] our scene let's work on the rotation of the book so it can actually open and 
+[00:01:27] the book so it can actually open and 
+[00:01:27] the book so it can actually open and close 
+[00:01:28] close 
+[00:01:28] close to do this it's actually going to be 
+[00:01:29] to do this it's actually going to be 
+[00:01:29] to do this it's actually going to be pretty easy we're going to select the 
+[00:01:31] pretty easy we're going to select the 
+[00:01:31] pretty easy we're going to select the spine of the book and we're going to 
+[00:01:32] spine of the book and we're going to 
+[00:01:32] spine of the book and we're going to create two different pivot points for 
+[00:01:34] create two different pivot points for 
+[00:01:34] create two different pivot points for the spine to do this go into edit mode 
+[00:01:37] the spine to do this go into edit mode 
+[00:01:37] the spine to do this go into edit mode and go into the edge select mode and 
+[00:01:39] and go into the edge select mode and 
+[00:01:39] and go into the edge select mode and select this top edge right here i'm 
+[00:01:41] select this top edge right here i'm 
+[00:01:41] select this top edge right here i'm going to press shift s and go cursor to 
+[00:01:44] going to press shift s and go cursor to 
+[00:01:44] going to press shift s and go cursor to select it 
+[00:01:45] select it 
+[00:01:45] select it next i'm going to press shift a and add 
+[00:01:47] next i'm going to press shift a and add 
+[00:01:47] next i'm going to press shift a and add in a new empty object and it's just 
+[00:01:49] in a new empty object and it's just 
+[00:01:49] in a new empty object and it's just going to be a single arrow let's add 
+[00:01:51] going to be a single arrow let's add 
+[00:01:51] going to be a single arrow let's add that in and scale it down i'm also going 
+[00:01:54] that in and scale it down i'm also going 
+[00:01:54] that in and scale it down i'm also going to press ctrl a and apply the scale so 
+[00:01:56] to press ctrl a and apply the scale so 
+[00:01:56] to press ctrl a and apply the scale so everything works correctly and then 
+[00:01:58] everything works correctly and then 
+[00:01:58] everything works correctly and then let's duplicate that and place it on the 
+[00:02:00] let's duplicate that and place it on the 
+[00:02:00] let's duplicate that and place it on the other side so press shift d and then x 
+[00:02:04] other side so press shift d and then x 
+[00:02:04] other side so press shift d and then x type in point 2 in the negative 
+[00:02:06] type in point 2 in the negative 
+[00:02:06] type in point 2 in the negative direction and enter to actually get the 
+[00:02:09] direction and enter to actually get the 
+[00:02:09] direction and enter to actually get the spine of the book to rotate around these 
+[00:02:11] spine of the book to rotate around these 
+[00:02:11] spine of the book to rotate around these two points we're going to select it and 
+[00:02:13] two points we're going to select it and 
+[00:02:13] two points we're going to select it and then add a new constraint 
+[00:02:15] then add a new constraint 
+[00:02:15] then add a new constraint the constraint that we're going to be 
+[00:02:16] the constraint that we're going to be 
+[00:02:16] the constraint that we're going to be adding is a pivot constraint this allows 
+[00:02:18] adding is a pivot constraint this allows 
+[00:02:18] adding is a pivot constraint this allows us to select a new pivot point for the 
+[00:02:21] us to select a new pivot point for the 
+[00:02:21] us to select a new pivot point for the object even though the origin is in the 
+[00:02:23] object even though the origin is in the 
+[00:02:23] object even though the origin is in the center this will act like a new origin 
+[00:02:25] center this will act like a new origin 
+[00:02:25] center this will act like a new origin point so for the target it's going to be 
+[00:02:27] point so for the target it's going to be 
+[00:02:27] point so for the target it's going to be the empty on the right you also want to 
+[00:02:30] the empty on the right you also want to 
+[00:02:30] the empty on the right you also want to make sure that the rotation range is set 
+[00:02:32] make sure that the rotation range is set 
+[00:02:32] make sure that the rotation range is set to the positive y direction so make sure 
+[00:02:34] to the positive y direction so make sure 
+[00:02:34] to the positive y direction so make sure it's positive y and select it 
+[00:02:37] it's positive y and select it 
+[00:02:37] it's positive y and select it we'll add in a new pivot point and it's 
+[00:02:39] we'll add in a new pivot point and it's 
+[00:02:39] we'll add in a new pivot point and it's going to be for the empty on the left 
+[00:02:41] going to be for the empty on the left 
+[00:02:41] going to be for the empty on the left side so for the target it's going to be 
+[00:02:43] side so for the target it's going to be 
+[00:02:43] side so for the target it's going to be the empty on the left and the rotation 
+[00:02:45] the empty on the left and the rotation 
+[00:02:45] the empty on the left and the rotation range this time is going to be negative 
+[00:02:47] range this time is going to be negative 
+[00:02:47] range this time is going to be negative y so now what happens is if we select 
+[00:02:49] y so now what happens is if we select 
+[00:02:49] y so now what happens is if we select our object and press r and y you can see 
+[00:02:52] our object and press r and y you can see 
+[00:02:52] our object and press r and y you can see it's rotating along that point just like 
+[00:02:54] it's rotating along that point just like 
+[00:02:54] it's rotating along that point just like that 
+[00:02:55] that 
+[00:02:56] that now before we continue creating the book 
+[00:02:57] now before we continue creating the book 
+[00:02:58] now before we continue creating the book animation here is a quick word from our 
+[00:02:59] animation here is a quick word from our 
+[00:02:59] animation here is a quick word from our sponsor once again this video is brought 
+[00:03:02] sponsor once again this video is brought 
+[00:03:02] sponsor once again this video is brought to you by skillshare skillshare is an 
+[00:03:03] to you by skillshare skillshare is an 
+[00:03:04] to you by skillshare skillshare is an online learning platform with thousands 
+[00:03:05] online learning platform with thousands 
+[00:03:05] online learning platform with thousands of classes taught by professionals they 
+[00:03:07] of classes taught by professionals they 
+[00:03:07] of classes taught by professionals they have a huge variety of subjects and 
+[00:03:09] have a huge variety of subjects and 
+[00:03:09] have a huge variety of subjects and topics that you'll never run out of 
+[00:03:11] topics that you'll never run out of 
+[00:03:11] topics that you'll never run out of things to learn some of the topics 
+[00:03:13] things to learn some of the topics 
+[00:03:13] things to learn some of the topics include animation illustration graphic 
+[00:03:15] include animation illustration graphic 
+[00:03:15] include animation illustration graphic design music and they even have a lot of 
+[00:03:18] design music and they even have a lot of 
+[00:03:18] design music and they even have a lot of blender classes one class i can 
+[00:03:20] blender classes one class i can 
+[00:03:20] blender classes one class i can recommend is character illustration by 
+[00:03:21] recommend is character illustration by 
+[00:03:22] recommend is character illustration by gabriel piccolo he goes into depth on 
+[00:03:24] gabriel piccolo he goes into depth on 
+[00:03:24] gabriel piccolo he goes into depth on the process of creating a character 
+[00:03:26] the process of creating a character 
+[00:03:26] the process of creating a character drawing it out on a piece of paper and 
+[00:03:27] drawing it out on a piece of paper and 
+[00:03:27] drawing it out on a piece of paper and it's actually really good if you're 
+[00:03:29] it's actually really good if you're 
+[00:03:29] it's actually really good if you're wanting to get into character design and 
+[00:03:30] wanting to get into character design and 
+[00:03:30] wanting to get into character design and learning how to draw faces and 
+[00:03:32] learning how to draw faces and 
+[00:03:32] learning how to draw faces and illustration and things like that this 
+[00:03:33] illustration and things like that this 
+[00:03:33] illustration and things like that this class is perfect with the premium 
+[00:03:35] class is perfect with the premium 
+[00:03:35] class is perfect with the premium membership you get unlimited access to 
+[00:03:37] membership you get unlimited access to 
+[00:03:37] membership you get unlimited access to every single class on their platform 
+[00:03:39] every single class on their platform 
+[00:03:39] every single class on their platform this also means that there's going to be 
+[00:03:41] this also means that there's going to be 
+[00:03:41] this also means that there's going to be no ads and you can study without any 
+[00:03:43] no ads and you can study without any 
+[00:03:43] no ads and you can study without any interruption i've been using skillshare 
+[00:03:45] interruption i've been using skillshare 
+[00:03:45] interruption i've been using skillshare for a really long time and i can 
+[00:03:46] for a really long time and i can 
+[00:03:46] for a really long time and i can definitely recommend it 
+[00:03:48] definitely recommend it 
+[00:03:48] definitely recommend it so here's the deal the first 1000 people 
+[00:03:50] so here's the deal the first 1000 people 
+[00:03:50] so here's the deal the first 1000 people to click the link in the description or 
+[00:03:52] to click the link in the description or 
+[00:03:52] to click the link in the description or the pin comment will get one month of 
+[00:03:53] the pin comment will get one month of 
+[00:03:54] the pin comment will get one month of the premium membership for free so what 
+[00:03:56] the premium membership for free so what 
+[00:03:56] the premium membership for free so what are you waiting for click the link down 
+[00:03:57] are you waiting for click the link down 
+[00:03:57] are you waiting for click the link down below and start learning something new 
+[00:03:59] below and start learning something new 
+[00:03:59] below and start learning something new today thanks again to skillshare for 
+[00:04:01] today thanks again to skillshare for 
+[00:04:01] today thanks again to skillshare for sponsoring this video now let's get back 
+[00:04:02] sponsoring this video now let's get back 
+[00:04:02] sponsoring this video now let's get back to the tutorial 
+[00:04:04] to the tutorial 
+[00:04:04] to the tutorial next up we're going to work on the two 
+[00:04:06] next up we're going to work on the two 
+[00:04:06] next up we're going to work on the two covers on each side this is also going 
+[00:04:08] covers on each side this is also going 
+[00:04:08] covers on each side this is also going to be pretty easy what we're going to 
+[00:04:09] to be pretty easy what we're going to 
+[00:04:09] to be pretty easy what we're going to first do is select the cover on the 
+[00:04:11] first do is select the cover on the 
+[00:04:11] first do is select the cover on the right and we want to make sure the 
+[00:04:13] right and we want to make sure the 
+[00:04:13] right and we want to make sure the origin is right at that empty point so 
+[00:04:16] origin is right at that empty point so 
+[00:04:16] origin is right at that empty point so with it selected i'm going to right 
+[00:04:17] with it selected i'm going to right 
+[00:04:17] with it selected i'm going to right click set origin and then the origin to 
+[00:04:19] click set origin and then the origin to 
+[00:04:19] click set origin and then the origin to the 3d cursor 
+[00:04:21] the 3d cursor 
+[00:04:21] the 3d cursor let's do the same thing on the other 
+[00:04:22] let's do the same thing on the other 
+[00:04:22] let's do the same thing on the other side select this empty press shift s and 
+[00:04:25] side select this empty press shift s and 
+[00:04:25] side select this empty press shift s and go cursor to select it then of course 
+[00:04:28] go cursor to select it then of course 
+[00:04:28] go cursor to select it then of course just set it right here origin to 3d 
+[00:04:30] just set it right here origin to 3d 
+[00:04:30] just set it right here origin to 3d cursor 
+[00:04:31] cursor 
+[00:04:31] cursor how this works is we're going to add in 
+[00:04:33] how this works is we're going to add in 
+[00:04:33] how this works is we're going to add in another constraint and it's going to be 
+[00:04:34] another constraint and it's going to be 
+[00:04:34] another constraint and it's going to be a copy rotation constraint 
+[00:04:38] a copy rotation constraint 
+[00:04:38] a copy rotation constraint we're going to change the mix to the add 
+[00:04:40] we're going to change the mix to the add 
+[00:04:40] we're going to change the mix to the add function and this will add rotation so 
+[00:04:42] function and this will add rotation so 
+[00:04:42] function and this will add rotation so when this object moves around it's going 
+[00:04:44] when this object moves around it's going 
+[00:04:44] when this object moves around it's going to rotate this object as well i also 
+[00:04:47] to rotate this object as well i also 
+[00:04:47] to rotate this object as well i also want to parent both of the covers to the 
+[00:04:49] want to parent both of the covers to the 
+[00:04:49] want to parent both of the covers to the spine so select the spine at last hit 
+[00:04:52] spine so select the spine at last hit 
+[00:04:52] spine so select the spine at last hit ctrl p and then parent it to the spine 
+[00:04:55] ctrl p and then parent it to the spine 
+[00:04:55] ctrl p and then parent it to the spine so now what happens is if we select it 
+[00:04:57] so now what happens is if we select it 
+[00:04:57] so now what happens is if we select it and then rotate it you can see they're 
+[00:04:58] and then rotate it you can see they're 
+[00:04:58] and then rotate it you can see they're rotating both the covers 
+[00:05:00] rotating both the covers 
+[00:05:00] rotating both the covers going back over to the left cover the 
+[00:05:02] going back over to the left cover the 
+[00:05:02] going back over to the left cover the target for this constraint is going to 
+[00:05:04] target for this constraint is going to 
+[00:05:04] target for this constraint is going to be the spine so select it and then i'm 
+[00:05:06] be the spine so select it and then i'm 
+[00:05:06] be the spine so select it and then i'm also going to limit the rotation of this 
+[00:05:09] also going to limit the rotation of this 
+[00:05:09] also going to limit the rotation of this i don't want it to actually go 
+[00:05:10] i don't want it to actually go 
+[00:05:10] i don't want it to actually go underneath the ground so we're going to 
+[00:05:12] underneath the ground so we're going to 
+[00:05:12] underneath the ground so we're going to make sure it stops rotating right at 
+[00:05:14] make sure it stops rotating right at 
+[00:05:14] make sure it stops rotating right at this point 
+[00:05:16] this point 
+[00:05:16] this point so to do that with the limit rotation 
+[00:05:18] so to do that with the limit rotation 
+[00:05:18] so to do that with the limit rotation we're going to select the y and the max 
+[00:05:21] we're going to select the y and the max 
+[00:05:21] we're going to select the y and the max value is going to be set up to 180 
+[00:05:23] value is going to be set up to 180 
+[00:05:24] value is going to be set up to 180 degrees 
+[00:05:25] degrees 
+[00:05:25] degrees also make sure you turn on effect 
+[00:05:27] also make sure you turn on effect 
+[00:05:27] also make sure you turn on effect transform 
+[00:05:28] transform 
+[00:05:28] transform let's do that exact same process on the 
+[00:05:30] let's do that exact same process on the 
+[00:05:30] let's do that exact same process on the other cover as well so select it 
+[00:05:33] other cover as well so select it 
+[00:05:33] other cover as well so select it click add constraint and copy rotation 
+[00:05:36] click add constraint and copy rotation 
+[00:05:36] click add constraint and copy rotation the target is going to be the spine and 
+[00:05:38] the target is going to be the spine and 
+[00:05:38] the target is going to be the spine and then for the 
+[00:05:40] then for the 
+[00:05:40] then for the mix mode we're going to select add 
+[00:05:42] mix mode we're going to select add 
+[00:05:42] mix mode we're going to select add then of course the last constraint is 
+[00:05:44] then of course the last constraint is 
+[00:05:44] then of course the last constraint is going to be the limit rotation because i 
+[00:05:46] going to be the limit rotation because i 
+[00:05:46] going to be the limit rotation because i don't want it to go underneath the 
+[00:05:47] don't want it to go underneath the 
+[00:05:47] don't want it to go underneath the ground so select the limit rotation 
+[00:05:49] ground so select the limit rotation 
+[00:05:50] ground so select the limit rotation y and this time for the minimum value 
+[00:05:53] y and this time for the minimum value 
+[00:05:53] y and this time for the minimum value we're going to go with a value of 
+[00:05:54] we're going to go with a value of 
+[00:05:54] we're going to go with a value of negative 180 degrees 
+[00:05:57] negative 180 degrees 
+[00:05:57] negative 180 degrees also make sure you turn on effect 
+[00:05:59] also make sure you turn on effect 
+[00:05:59] also make sure you turn on effect transform 
+[00:06:00] transform 
+[00:06:00] transform now what happens is if we select our 
+[00:06:02] now what happens is if we select our 
+[00:06:02] now what happens is if we select our spine and rotate this along the y you 
+[00:06:04] spine and rotate this along the y you 
+[00:06:04] spine and rotate this along the y you can see the book will close and then if 
+[00:06:07] can see the book will close and then if 
+[00:06:07] can see the book will close and then if we go on the other side the book will 
+[00:06:08] we go on the other side the book will 
+[00:06:08] we go on the other side the book will close on that side as well 
+[00:06:11] close on that side as well 
+[00:06:11] close on that side as well now before we add in the pages let's do 
+[00:06:13] now before we add in the pages let's do 
+[00:06:13] now before we add in the pages let's do a little bit of animating on this book 
+[00:06:15] a little bit of animating on this book 
+[00:06:15] a little bit of animating on this book cover first off i'm going to rotate this 
+[00:06:17] cover first off i'm going to rotate this 
+[00:06:17] cover first off i'm going to rotate this along the y till 90 degrees and you 
+[00:06:20] along the y till 90 degrees and you 
+[00:06:20] along the y till 90 degrees and you don't want to go past 92 degrees because 
+[00:06:21] don't want to go past 92 degrees because 
+[00:06:21] don't want to go past 92 degrees because you'll see this is what happens make 
+[00:06:23] you'll see this is what happens make 
+[00:06:23] you'll see this is what happens make sure whenever you're rotating it that 
+[00:06:25] sure whenever you're rotating it that 
+[00:06:25] sure whenever you're rotating it that you stop exactly at 90 degrees 
+[00:06:28] you stop exactly at 90 degrees 
+[00:06:28] you stop exactly at 90 degrees on frame 1 i'm going to hit i and add in 
+[00:06:31] on frame 1 i'm going to hit i and add in 
+[00:06:31] on frame 1 i'm going to hit i and add in a rotation keyframe to the spine next 
+[00:06:34] a rotation keyframe to the spine next 
+[00:06:34] a rotation keyframe to the spine next we're going to go to frame a 15 and then 
+[00:06:36] we're going to go to frame a 15 and then 
+[00:06:36] we're going to go to frame a 15 and then press alt r to reset the animation i'm 
+[00:06:39] press alt r to reset the animation i'm 
+[00:06:39] press alt r to reset the animation i'm going to hit i and add in another 
+[00:06:41] going to hit i and add in another 
+[00:06:41] going to hit i and add in another rotation keyframe 
+[00:06:43] rotation keyframe 
+[00:06:43] rotation keyframe then we're going to skip to frame 30 and 
+[00:06:45] then we're going to skip to frame 30 and 
+[00:06:45] then we're going to skip to frame 30 and rotate this along the y in the negative 
+[00:06:47] rotate this along the y in the negative 
+[00:06:47] rotate this along the y in the negative direction 
+[00:06:48] direction 
+[00:06:48] direction all the way to negative 90 then hit i 
+[00:06:51] all the way to negative 90 then hit i 
+[00:06:51] all the way to negative 90 then hit i and add in another rotation keyframe 
+[00:06:54] and add in another rotation keyframe 
+[00:06:54] and add in another rotation keyframe make sure you hold ctrl when you do this 
+[00:06:56] make sure you hold ctrl when you do this 
+[00:06:56] make sure you hold ctrl when you do this so it can actually snap to the 5 degree 
+[00:06:58] so it can actually snap to the 5 degree 
+[00:06:58] so it can actually snap to the 5 degree increments as you can see here don't 
+[00:07:00] increments as you can see here don't 
+[00:07:00] increments as you can see here don't worry about the speed of the animation 
+[00:07:02] worry about the speed of the animation 
+[00:07:02] worry about the speed of the animation we're going to be changing these 
+[00:07:03] we're going to be changing these 
+[00:07:03] we're going to be changing these keyframes later these are just 
+[00:07:04] keyframes later these are just 
+[00:07:04] keyframes later these are just placeholders 
+[00:07:07] placeholders 
+[00:07:07] placeholders next up we are ready to start adding in 
+[00:07:09] next up we are ready to start adding in 
+[00:07:09] next up we are ready to start adding in the paper i'm going to create a new 
+[00:07:11] the paper i'm going to create a new 
+[00:07:11] the paper i'm going to create a new collection on the right side and we're 
+[00:07:12] collection on the right side and we're 
+[00:07:12] collection on the right side and we're going to call this pages 
+[00:07:15] going to call this pages 
+[00:07:15] going to call this pages then i'm going to go into top view and 
+[00:07:17] then i'm going to go into top view and 
+[00:07:17] then i'm going to go into top view and then add in the piece of paper so i'm 
+[00:07:18] then add in the piece of paper so i'm 
+[00:07:18] then add in the piece of paper so i'm going to press shift a and add in a new 
+[00:07:20] going to press shift a and add in a new 
+[00:07:20] going to press shift a and add in a new mesh and it's going to be a plane 
+[00:07:23] mesh and it's going to be a plane 
+[00:07:23] mesh and it's going to be a plane let's go into wireframe so we can see 
+[00:07:24] let's go into wireframe so we can see 
+[00:07:24] let's go into wireframe so we can see what we're doing and then let's go into 
+[00:07:25] what we're doing and then let's go into 
+[00:07:26] what we're doing and then let's go into edit mode we need to make sure the 
+[00:07:27] edit mode we need to make sure the 
+[00:07:27] edit mode we need to make sure the origin is right on the edge of this 
+[00:07:29] origin is right on the edge of this 
+[00:07:29] origin is right on the edge of this plane so i'm going to press g and then x 
+[00:07:32] plane so i'm going to press g and then x 
+[00:07:32] plane so i'm going to press g and then x and drag it over so it's right on the 
+[00:07:34] and drag it over so it's right on the 
+[00:07:34] and drag it over so it's right on the edge 
+[00:07:35] edge 
+[00:07:35] edge go out of edit mode and then holding 
+[00:07:36] go out of edit mode and then holding 
+[00:07:36] go out of edit mode and then holding control i'm going to place it right next 
+[00:07:38] control i'm going to place it right next 
+[00:07:38] control i'm going to place it right next to the edge then you can also scale it 
+[00:07:40] to the edge then you can also scale it 
+[00:07:40] to the edge then you can also scale it down along the x and the y so it's 
+[00:07:42] down along the x and the y so it's 
+[00:07:42] down along the x and the y so it's actually inside the book alright so we 
+[00:07:44] actually inside the book alright so we 
+[00:07:44] actually inside the book alright so we have the size of the page correct now we 
+[00:07:47] have the size of the page correct now we 
+[00:07:47] have the size of the page correct now we need to subdivide this and add a couple 
+[00:07:49] need to subdivide this and add a couple 
+[00:07:49] need to subdivide this and add a couple different modifiers 
+[00:07:50] different modifiers 
+[00:07:50] different modifiers so what i'll do is i'll go into edit 
+[00:07:52] so what i'll do is i'll go into edit 
+[00:07:52] so what i'll do is i'll go into edit mode hit control r and we're going to 
+[00:07:54] mode hit control r and we're going to 
+[00:07:54] mode hit control r and we're going to add 40 loop cuts so press 40 enter and 
+[00:07:58] add 40 loop cuts so press 40 enter and 
+[00:07:58] add 40 loop cuts so press 40 enter and then right click to make sure they're 
+[00:07:59] then right click to make sure they're 
+[00:08:00] then right click to make sure they're centered just like that 
+[00:08:02] centered just like that 
+[00:08:02] centered just like that next up the modifier that we're going to 
+[00:08:03] next up the modifier that we're going to 
+[00:08:04] next up the modifier that we're going to be adding is a simple deform modifier 
+[00:08:06] be adding is a simple deform modifier 
+[00:08:06] be adding is a simple deform modifier this will have the paper actually bend 
+[00:08:08] this will have the paper actually bend 
+[00:08:08] this will have the paper actually bend as it's moving up 
+[00:08:10] as it's moving up 
+[00:08:10] as it's moving up so go over to the modifier tab click add 
+[00:08:13] so go over to the modifier tab click add 
+[00:08:13] so go over to the modifier tab click add modifier and then select the simple 
+[00:08:15] modifier and then select the simple 
+[00:08:15] modifier and then select the simple deform modifier 
+[00:08:17] deform modifier 
+[00:08:17] deform modifier for the type it's going to be set to the 
+[00:08:18] for the type it's going to be set to the 
+[00:08:18] for the type it's going to be set to the bend mode and then for the access it's 
+[00:08:21] bend mode and then for the access it's 
+[00:08:21] bend mode and then for the access it's going to be the z-axis 
+[00:08:23] going to be the z-axis 
+[00:08:24] going to be the z-axis currently though this does not look that 
+[00:08:25] currently though this does not look that 
+[00:08:25] currently though this does not look that good and you can see it's rotated along 
+[00:08:27] good and you can see it's rotated along 
+[00:08:27] good and you can see it's rotated along the wrong direction so what we need to 
+[00:08:29] the wrong direction so what we need to 
+[00:08:29] the wrong direction so what we need to do is actually go into side view by 
+[00:08:31] do is actually go into side view by 
+[00:08:31] do is actually go into side view by pressing three and then go into edit 
+[00:08:33] pressing three and then go into edit 
+[00:08:33] pressing three and then go into edit mode 
+[00:08:34] mode 
+[00:08:34] mode select everything with a and then rotate 
+[00:08:37] select everything with a and then rotate 
+[00:08:37] select everything with a and then rotate it by 90 degrees holding ctrl i'm going 
+[00:08:39] it by 90 degrees holding ctrl i'm going 
+[00:08:39] it by 90 degrees holding ctrl i'm going to snap it to this axis just like that 
+[00:08:42] to snap it to this axis just like that 
+[00:08:42] to snap it to this axis just like that go out of edit mode and then rotate it 
+[00:08:44] go out of edit mode and then rotate it 
+[00:08:44] go out of edit mode and then rotate it back 
+[00:08:46] back 
+[00:08:46] back there you can see it's actually rotating 
+[00:08:47] there you can see it's actually rotating 
+[00:08:48] there you can see it's actually rotating in the correct direction this time now 
+[00:08:50] in the correct direction this time now 
+[00:08:50] in the correct direction this time now we can animate the angle right here 
+[00:08:52] we can animate the angle right here 
+[00:08:52] we can animate the angle right here i'm going to be setting this down to 
+[00:08:54] i'm going to be setting this down to 
+[00:08:54] i'm going to be setting this down to zero on frame one and then add in a 
+[00:08:56] zero on frame one and then add in a 
+[00:08:56] zero on frame one and then add in a keyframe next we're going to skip to 
+[00:08:58] keyframe next we're going to skip to 
+[00:08:58] keyframe next we're going to skip to frame 15 and then we're going to set 
+[00:09:00] frame 15 and then we're going to set 
+[00:09:00] frame 15 and then we're going to set this to a negative value you can imagine 
+[00:09:02] this to a negative value you can imagine 
+[00:09:02] this to a negative value you can imagine the page actually flying outwards and 
+[00:09:04] the page actually flying outwards and 
+[00:09:04] the page actually flying outwards and it's going to bend in this direction 
+[00:09:06] it's going to bend in this direction 
+[00:09:06] it's going to bend in this direction yeah this direction the negative value 
+[00:09:08] yeah this direction the negative value 
+[00:09:08] yeah this direction the negative value so set this down to negative 
+[00:09:10] so set this down to negative 
+[00:09:10] so set this down to negative 45 
+[00:09:11] 45 
+[00:09:11] 45 then add in another keyframe 
+[00:09:14] then add in another keyframe 
+[00:09:14] then add in another keyframe skip to 15 frames later on frame 30 and 
+[00:09:17] skip to 15 frames later on frame 30 and 
+[00:09:17] skip to 15 frames later on frame 30 and we're gonna set this back down to zero 
+[00:09:19] we're gonna set this back down to zero 
+[00:09:19] we're gonna set this back down to zero enter and then add in finally that last 
+[00:09:21] enter and then add in finally that last 
+[00:09:21] enter and then add in finally that last keyframe and there we go we now have the 
+[00:09:24] keyframe and there we go we now have the 
+[00:09:24] keyframe and there we go we now have the animation of this working now let's add 
+[00:09:26] animation of this working now let's add 
+[00:09:26] animation of this working now let's add in the last modifier and then we can 
+[00:09:27] in the last modifier and then we can 
+[00:09:28] in the last modifier and then we can start duplicating the pages 
+[00:09:30] start duplicating the pages 
+[00:09:30] start duplicating the pages there is one problem with our animation 
+[00:09:32] there is one problem with our animation 
+[00:09:32] there is one problem with our animation and the problem is that the beginning of 
+[00:09:34] and the problem is that the beginning of 
+[00:09:34] and the problem is that the beginning of the page right here is not staying 
+[00:09:36] the page right here is not staying 
+[00:09:36] the page right here is not staying connected to the spine of the book 
+[00:09:38] connected to the spine of the book 
+[00:09:38] connected to the spine of the book this does not really look good and it 
+[00:09:39] this does not really look good and it 
+[00:09:40] this does not really look good and it totally breaks the animation so how 
+[00:09:41] totally breaks the animation so how 
+[00:09:41] totally breaks the animation so how we're going to fix this is by adding a 
+[00:09:43] we're going to fix this is by adding a 
+[00:09:43] we're going to fix this is by adding a hook modifier to make sure it stays 
+[00:09:45] hook modifier to make sure it stays 
+[00:09:45] hook modifier to make sure it stays right at the spine of the book 
+[00:09:47] right at the spine of the book 
+[00:09:47] right at the spine of the book to do this i'm going to go into top view 
+[00:09:50] to do this i'm going to go into top view 
+[00:09:50] to do this i'm going to go into top view and press shift s and then click on 
+[00:09:52] and press shift s and then click on 
+[00:09:52] and press shift s and then click on cursor to select it 
+[00:09:54] cursor to select it 
+[00:09:54] cursor to select it then let's add in a new object i'm going 
+[00:09:56] then let's add in a new object i'm going 
+[00:09:56] then let's add in a new object i'm going to press shift a and add in an empty 
+[00:09:58] to press shift a and add in an empty 
+[00:09:58] to press shift a and add in an empty object we'll just go with a plain axis 
+[00:10:00] object we'll just go with a plain axis 
+[00:10:00] object we'll just go with a plain axis and scale it down 
+[00:10:02] and scale it down 
+[00:10:02] and scale it down this is the object that we're gonna have 
+[00:10:04] this is the object that we're gonna have 
+[00:10:04] this is the object that we're gonna have the page being hooked to 
+[00:10:06] the page being hooked to 
+[00:10:06] the page being hooked to i'm gonna press ctrl a and apply the 
+[00:10:08] i'm gonna press ctrl a and apply the 
+[00:10:08] i'm gonna press ctrl a and apply the scale make sure you do that that's very 
+[00:10:09] scale make sure you do that that's very 
+[00:10:09] scale make sure you do that that's very important then let's grab both the paper 
+[00:10:12] important then let's grab both the paper 
+[00:10:12] important then let's grab both the paper and that empty that we just added and 
+[00:10:14] and that empty that we just added and 
+[00:10:14] and that empty that we just added and drag it up because currently it's right 
+[00:10:16] drag it up because currently it's right 
+[00:10:16] drag it up because currently it's right inside and that's not very good so let's 
+[00:10:18] inside and that's not very good so let's 
+[00:10:18] inside and that's not very good so let's drag it up just slightly just like that 
+[00:10:20] drag it up just slightly just like that 
+[00:10:20] drag it up just slightly just like that all right so what we need to do is 
+[00:10:21] all right so what we need to do is 
+[00:10:21] all right so what we need to do is select the page and then add in a new 
+[00:10:24] select the page and then add in a new 
+[00:10:24] select the page and then add in a new modifier let's go with the hook modifier 
+[00:10:26] modifier let's go with the hook modifier 
+[00:10:26] modifier let's go with the hook modifier right here what the hook modifier does 
+[00:10:28] right here what the hook modifier does 
+[00:10:28] right here what the hook modifier does is it allows you to take an object and 
+[00:10:30] is it allows you to take an object and 
+[00:10:30] is it allows you to take an object and have another object hooked to it and you 
+[00:10:32] have another object hooked to it and you 
+[00:10:32] have another object hooked to it and you can manipulate it and it will stay in 
+[00:10:34] can manipulate it and it will stay in 
+[00:10:34] can manipulate it and it will stay in that exact position 
+[00:10:36] that exact position 
+[00:10:36] that exact position and of course the object that we're 
+[00:10:38] and of course the object that we're 
+[00:10:38] and of course the object that we're going to be hooking to is that empty 
+[00:10:39] going to be hooking to is that empty 
+[00:10:39] going to be hooking to is that empty that we just added so click on the 
+[00:10:41] that we just added so click on the 
+[00:10:41] that we just added so click on the eyedropper tool and select the empty 
+[00:10:43] eyedropper tool and select the empty 
+[00:10:43] eyedropper tool and select the empty right there 
+[00:10:45] right there 
+[00:10:45] right there the other thing that we want to do is 
+[00:10:46] the other thing that we want to do is 
+[00:10:46] the other thing that we want to do is add in a vertex group because right at 
+[00:10:49] add in a vertex group because right at 
+[00:10:49] add in a vertex group because right at this point right here i want the page to 
+[00:10:51] this point right here i want the page to 
+[00:10:51] this point right here i want the page to actually be up like this but i also want 
+[00:10:54] actually be up like this but i also want 
+[00:10:54] actually be up like this but i also want it to be laying down on its side over 
+[00:10:56] it to be laying down on its side over 
+[00:10:56] it to be laying down on its side over here 
+[00:10:56] here 
+[00:10:56] here so we're going to be adding in a 
+[00:10:58] so we're going to be adding in a 
+[00:10:58] so we're going to be adding in a gradient weight effect so that only some 
+[00:11:00] gradient weight effect so that only some 
+[00:11:00] gradient weight effect so that only some parts of the mesh is actually hooked to 
+[00:11:02] parts of the mesh is actually hooked to 
+[00:11:02] parts of the mesh is actually hooked to the spine to do this we're going to go 
+[00:11:04] the spine to do this we're going to go 
+[00:11:04] the spine to do this we're going to go into the weight paint mode up top here 
+[00:11:06] into the weight paint mode up top here 
+[00:11:06] into the weight paint mode up top here and then go into top view 
+[00:11:08] and then go into top view 
+[00:11:08] and then go into top view let's restart the animation so it's 
+[00:11:10] let's restart the animation so it's 
+[00:11:10] let's restart the animation so it's laying flat and then select the gradient 
+[00:11:12] laying flat and then select the gradient 
+[00:11:12] laying flat and then select the gradient tool in top left if we then click and 
+[00:11:15] tool in top left if we then click and 
+[00:11:15] tool in top left if we then click and drag holding control so it locks it to 
+[00:11:17] drag holding control so it locks it to 
+[00:11:17] drag holding control so it locks it to the x-axis we're going to drag it out 
+[00:11:19] the x-axis we're going to drag it out 
+[00:11:19] the x-axis we're going to drag it out just slightly probably around there or 
+[00:11:23] just slightly probably around there or 
+[00:11:23] just slightly probably around there or so looks pretty good only a little bit 
+[00:11:26] so looks pretty good only a little bit 
+[00:11:26] so looks pretty good only a little bit with that done we can go out of weight 
+[00:11:28] with that done we can go out of weight 
+[00:11:28] with that done we can go out of weight paint back into object mode and then 
+[00:11:30] paint back into object mode and then 
+[00:11:30] paint back into object mode and then select the vertex group that we just 
+[00:11:32] select the vertex group that we just 
+[00:11:32] select the vertex group that we just created 
+[00:11:33] created 
+[00:11:33] created now what happens is if we play our 
+[00:11:35] now what happens is if we play our 
+[00:11:35] now what happens is if we play our animation 
+[00:11:36] animation 
+[00:11:36] animation and oh we i forgot to do one more thing 
+[00:11:38] and oh we i forgot to do one more thing 
+[00:11:38] and oh we i forgot to do one more thing we need to actually parent the empty to 
+[00:11:40] we need to actually parent the empty to 
+[00:11:40] we need to actually parent the empty to the spine of the book so select the 
+[00:11:43] the spine of the book so select the 
+[00:11:43] the spine of the book so select the empty and then select the spine 
+[00:11:45] empty and then select the spine 
+[00:11:45] empty and then select the spine last hit control p and then parent it to 
+[00:11:48] last hit control p and then parent it to 
+[00:11:48] last hit control p and then parent it to the object 
+[00:11:50] the object 
+[00:11:50] the object now if we play our animation you can see 
+[00:11:53] now if we play our animation you can see 
+[00:11:53] now if we play our animation you can see the paper is actually staying stuck to 
+[00:11:54] the paper is actually staying stuck to 
+[00:11:54] the paper is actually staying stuck to the spine and that's exactly what we 
+[00:11:56] the spine and that's exactly what we 
+[00:11:56] the spine and that's exactly what we want 
+[00:11:58] want 
+[00:11:58] want i'm also going to select the paper right 
+[00:12:00] i'm also going to select the paper right 
+[00:12:00] i'm also going to select the paper right click and shade it smooth alright so now 
+[00:12:03] click and shade it smooth alright so now 
+[00:12:03] click and shade it smooth alright so now that we've added the hook and the simple 
+[00:12:04] that we've added the hook and the simple 
+[00:12:04] that we've added the hook and the simple deform we are ready to start duplicating 
+[00:12:07] deform we are ready to start duplicating 
+[00:12:07] deform we are ready to start duplicating the page 
+[00:12:08] the page 
+[00:12:08] the page i'm going to zoom in and select both the 
+[00:12:10] i'm going to zoom in and select both the 
+[00:12:10] i'm going to zoom in and select both the empty and the piece of paper and then 
+[00:12:12] empty and the piece of paper and then 
+[00:12:12] empty and the piece of paper and then press shift d and drag it up along the z 
+[00:12:14] press shift d and drag it up along the z 
+[00:12:14] press shift d and drag it up along the z axis just slightly 
+[00:12:16] axis just slightly 
+[00:12:16] axis just slightly the closer you have the pages together 
+[00:12:18] the closer you have the pages together 
+[00:12:18] the closer you have the pages together the more that will be added i'm probably 
+[00:12:20] the more that will be added i'm probably 
+[00:12:20] the more that will be added i'm probably going to go with right about there then 
+[00:12:22] going to go with right about there then 
+[00:12:22] going to go with right about there then i'm going to repeat that action by 
+[00:12:23] i'm going to repeat that action by 
+[00:12:23] i'm going to repeat that action by hitting shift r and holding that down 
+[00:12:26] hitting shift r and holding that down 
+[00:12:26] hitting shift r and holding that down that will duplicate it all the way up to 
+[00:12:28] that will duplicate it all the way up to 
+[00:12:28] that will duplicate it all the way up to the very top 
+[00:12:29] the very top 
+[00:12:29] the very top and there we go so now we are ready to 
+[00:12:31] and there we go so now we are ready to 
+[00:12:31] and there we go so now we are ready to start animating the pages actually 
+[00:12:32] start animating the pages actually 
+[00:12:32] start animating the pages actually rotating with the book itself now you 
+[00:12:35] rotating with the book itself now you 
+[00:12:35] rotating with the book itself now you might be wondering why we don't just 
+[00:12:37] might be wondering why we don't just 
+[00:12:37] might be wondering why we don't just select the page and then parent that to 
+[00:12:39] select the page and then parent that to 
+[00:12:39] select the page and then parent that to the empty and the reason for that is it 
+[00:12:41] the empty and the reason for that is it 
+[00:12:41] the empty and the reason for that is it just doesn't work that way since i want 
+[00:12:43] just doesn't work that way since i want 
+[00:12:43] just doesn't work that way since i want some of the pages to actually remain on 
+[00:12:45] some of the pages to actually remain on 
+[00:12:45] some of the pages to actually remain on the ground as the other pages are moving 
+[00:12:47] the ground as the other pages are moving 
+[00:12:48] the ground as the other pages are moving up if we parent it to the empty all of 
+[00:12:50] up if we parent it to the empty all of 
+[00:12:50] up if we parent it to the empty all of the pages are going to move at the exact 
+[00:12:51] the pages are going to move at the exact 
+[00:12:51] the pages are going to move at the exact same time and it's not going to look 
+[00:12:53] same time and it's not going to look 
+[00:12:53] same time and it's not going to look that good so that's why we're going to 
+[00:12:55] that good so that's why we're going to 
+[00:12:55] that good so that's why we're going to be animating them ourselves without 
+[00:12:56] be animating them ourselves without 
+[00:12:56] be animating them ourselves without parenting them to the empties so what 
+[00:12:59] parenting them to the empties so what 
+[00:12:59] parenting them to the empties so what i'll do is i will select all the pages 
+[00:13:01] i'll do is i will select all the pages 
+[00:13:01] i'll do is i will select all the pages on the right side all of these just like 
+[00:13:02] on the right side all of these just like 
+[00:13:02] on the right side all of these just like this and then on frame 1 i'm going to 
+[00:13:04] this and then on frame 1 i'm going to 
+[00:13:04] this and then on frame 1 i'm going to hit i and add in a location rotation 
+[00:13:07] hit i and add in a location rotation 
+[00:13:07] hit i and add in a location rotation keyframe 
+[00:13:08] keyframe 
+[00:13:08] keyframe then we're going to skip to frame 15 
+[00:13:11] then we're going to skip to frame 15 
+[00:13:12] then we're going to skip to frame 15 we're going to rotate all of these just 
+[00:13:13] we're going to rotate all of these just 
+[00:13:13] we're going to rotate all of these just like this rotate them 90 degrees and 
+[00:13:16] like this rotate them 90 degrees and 
+[00:13:16] like this rotate them 90 degrees and then holding control i'm going to place 
+[00:13:17] then holding control i'm going to place 
+[00:13:17] then holding control i'm going to place them right at this point here if for 
+[00:13:20] them right at this point here if for 
+[00:13:20] them right at this point here if for some reason you have a little bit of a 
+[00:13:22] some reason you have a little bit of a 
+[00:13:22] some reason you have a little bit of a gap in between where they're located 
+[00:13:24] gap in between where they're located 
+[00:13:24] gap in between where they're located what you can do is select both of the 
+[00:13:25] what you can do is select both of the 
+[00:13:26] what you can do is select both of the middle empties right here since i have 
+[00:13:27] middle empties right here since i have 
+[00:13:27] middle empties right here since i have an even number i'm going to select two 
+[00:13:29] an even number i'm going to select two 
+[00:13:29] an even number i'm going to select two of them hit shift s and go cursor to 
+[00:13:32] of them hit shift s and go cursor to 
+[00:13:32] of them hit shift s and go cursor to select it then i will select all of the 
+[00:13:35] select it then i will select all of the 
+[00:13:35] select it then i will select all of the pages up top 
+[00:13:37] pages up top 
+[00:13:37] pages up top deselect both of these empties we don't 
+[00:13:39] deselect both of these empties we don't 
+[00:13:39] deselect both of these empties we don't want to select those 
+[00:13:40] want to select those 
+[00:13:40] want to select those then i'll press shift s and go selection 
+[00:13:43] then i'll press shift s and go selection 
+[00:13:43] then i'll press shift s and go selection to cursor but keep the offset and that 
+[00:13:46] to cursor but keep the offset and that 
+[00:13:46] to cursor but keep the offset and that will make sure that the origins are in 
+[00:13:47] will make sure that the origins are in 
+[00:13:47] will make sure that the origins are in the exact same position 
+[00:13:49] the exact same position 
+[00:13:49] the exact same position then i'll hit i and add in another 
+[00:13:51] then i'll hit i and add in another 
+[00:13:51] then i'll hit i and add in another location rotation keyframe 
+[00:13:54] location rotation keyframe 
+[00:13:54] location rotation keyframe skip to frame 30 we're going to do the 
+[00:13:55] skip to frame 30 we're going to do the 
+[00:13:56] skip to frame 30 we're going to do the exact same thing rotate the origins by 
+[00:13:58] exact same thing rotate the origins by 
+[00:13:58] exact same thing rotate the origins by 90 degrees and then place them right 
+[00:14:00] 90 degrees and then place them right 
+[00:14:00] 90 degrees and then place them right here 
+[00:14:01] here 
+[00:14:01] here but you can see they're still offset a 
+[00:14:03] but you can see they're still offset a 
+[00:14:03] but you can see they're still offset a little bit so what i'll do is i will 
+[00:14:04] little bit so what i'll do is i will 
+[00:14:04] little bit so what i'll do is i will select both of the middle empties shift 
+[00:14:07] select both of the middle empties shift 
+[00:14:07] select both of the middle empties shift s 
+[00:14:08] s 
+[00:14:08] s cursor to selected then i will select 
+[00:14:10] cursor to selected then i will select 
+[00:14:10] cursor to selected then i will select all the pages shift s selection to 
+[00:14:13] all the pages shift s selection to 
+[00:14:13] all the pages shift s selection to cursor but keep the offset and then 
+[00:14:15] cursor but keep the offset and then 
+[00:14:15] cursor but keep the offset and then we'll add in the last location keyframe 
+[00:14:17] we'll add in the last location keyframe 
+[00:14:17] we'll add in the last location keyframe now if we restart our animation and play 
+[00:14:19] now if we restart our animation and play 
+[00:14:19] now if we restart our animation and play it here is the result 
+[00:14:22] 
+[00:14:22] so now the question is how do we get all 
+[00:14:24] so now the question is how do we get all 
+[00:14:24] so now the question is how do we get all the pages to move separately so they're 
+[00:14:26] the pages to move separately so they're 
+[00:14:26] the pages to move separately so they're not moving at the exact same time this 
+[00:14:28] not moving at the exact same time this 
+[00:14:28] not moving at the exact same time this is actually very easy with this add-on 
+[00:14:30] is actually very easy with this add-on 
+[00:14:30] is actually very easy with this add-on called commotion if you watch my puzzle 
+[00:14:32] called commotion if you watch my puzzle 
+[00:14:32] called commotion if you watch my puzzle tutorial you'll know exactly how this 
+[00:14:34] tutorial you'll know exactly how this 
+[00:14:34] tutorial you'll know exactly how this works it allows you to offset all the 
+[00:14:37] works it allows you to offset all the 
+[00:14:37] works it allows you to offset all the animation very very easily with one 
+[00:14:39] animation very very easily with one 
+[00:14:39] animation very very easily with one click of a button so to get this add-on 
+[00:14:41] click of a button so to get this add-on 
+[00:14:41] click of a button so to get this add-on click the link in the description 
+[00:14:42] click the link in the description 
+[00:14:42] click the link in the description download it and install it to install an 
+[00:14:44] download it and install it to install an 
+[00:14:44] download it and install it to install an add-on go over to user preferences 
+[00:14:46] add-on go over to user preferences 
+[00:14:46] add-on go over to user preferences underneath the add-ons just click 
+[00:14:48] underneath the add-ons just click 
+[00:14:48] underneath the add-ons just click install and then make sure you add that 
+[00:14:50] install and then make sure you add that 
+[00:14:50] install and then make sure you add that in by typing in commotion in the search 
+[00:14:53] in by typing in commotion in the search 
+[00:14:53] in by typing in commotion in the search bar and then making sure it's checked 
+[00:14:55] bar and then making sure it's checked 
+[00:14:55] bar and then making sure it's checked right there so once you have it 
+[00:14:56] right there so once you have it 
+[00:14:56] right there so once you have it installed let's go over to the second 
+[00:14:58] installed let's go over to the second 
+[00:14:58] installed let's go over to the second collection with all of the pages and 
+[00:15:00] collection with all of the pages and 
+[00:15:00] collection with all of the pages and then let's select them all 
+[00:15:02] then let's select them all 
+[00:15:02] then let's select them all i'm going to select the top page last 
+[00:15:04] i'm going to select the top page last 
+[00:15:04] i'm going to select the top page last this one right here so make sure it's 
+[00:15:06] this one right here so make sure it's 
+[00:15:06] this one right here so make sure it's the active object then i'm going to 
+[00:15:07] the active object then i'm going to 
+[00:15:08] the active object then i'm going to press shift s and go cursor to active so 
+[00:15:11] press shift s and go cursor to active so 
+[00:15:11] press shift s and go cursor to active so my cursor is placed right at the top 
+[00:15:13] my cursor is placed right at the top 
+[00:15:13] my cursor is placed right at the top then you can press n and go over to the 
+[00:15:15] then you can press n and go over to the 
+[00:15:15] then you can press n and go over to the commotion tab down at the bottom right 
+[00:15:17] commotion tab down at the bottom right 
+[00:15:17] commotion tab down at the bottom right here this offset right here controls how 
+[00:15:19] here this offset right here controls how 
+[00:15:19] here this offset right here controls how many frames the animation is actually 
+[00:15:22] many frames the animation is actually 
+[00:15:22] many frames the animation is actually offset and then you can click on offset 
+[00:15:24] offset and then you can click on offset 
+[00:15:24] offset and then you can click on offset animation that will do the entire thing 
+[00:15:27] animation that will do the entire thing 
+[00:15:27] animation that will do the entire thing one thing to keep in mind is you don't 
+[00:15:28] one thing to keep in mind is you don't 
+[00:15:28] one thing to keep in mind is you don't want to set one for the offset if you do 
+[00:15:30] want to set one for the offset if you do 
+[00:15:30] want to set one for the offset if you do this it's going to look a little bit 
+[00:15:32] this it's going to look a little bit 
+[00:15:32] this it's going to look a little bit weird and your animation will look like 
+[00:15:34] weird and your animation will look like 
+[00:15:34] weird and your animation will look like it's completely static which does not 
+[00:15:36] it's completely static which does not 
+[00:15:36] it's completely static which does not look good 
+[00:15:37] look good 
+[00:15:37] look good so for my animation i'm going to set it 
+[00:15:39] so for my animation i'm going to set it 
+[00:15:39] so for my animation i'm going to set it up to a value of two then i'm gonna 
+[00:15:41] up to a value of two then i'm gonna 
+[00:15:41] up to a value of two then i'm gonna click on offset animation 
+[00:15:43] click on offset animation 
+[00:15:43] click on offset animation and there you go now if we play our 
+[00:15:45] and there you go now if we play our 
+[00:15:45] and there you go now if we play our animation here is the result that we're 
+[00:15:46] animation here is the result that we're 
+[00:15:46] animation here is the result that we're getting you can see all of the pages are 
+[00:15:49] getting you can see all of the pages are 
+[00:15:49] getting you can see all of the pages are moving separately which is looking 
+[00:15:50] moving separately which is looking 
+[00:15:50] moving separately which is looking really good next up i'm going to select 
+[00:15:53] really good next up i'm going to select 
+[00:15:53] really good next up i'm going to select only half of the pages right about there 
+[00:15:55] only half of the pages right about there 
+[00:15:55] only half of the pages right about there and then i'm going to move these 
+[00:15:56] and then i'm going to move these 
+[00:15:56] and then i'm going to move these keyframes over to the right so we have a 
+[00:15:58] keyframes over to the right so we have a 
+[00:15:58] keyframes over to the right so we have a gap in the middle 
+[00:16:00] gap in the middle 
+[00:16:00] gap in the middle so now if we select everything we can 
+[00:16:02] so now if we select everything we can 
+[00:16:02] so now if we select everything we can see we have two sets of keyframes i 
+[00:16:04] see we have two sets of keyframes i 
+[00:16:04] see we have two sets of keyframes i might drag these a little bit closer 
+[00:16:05] might drag these a little bit closer 
+[00:16:05] might drag these a little bit closer though probably around there now if we 
+[00:16:08] though probably around there now if we 
+[00:16:08] though probably around there now if we play our animation we can see this is 
+[00:16:09] play our animation we can see this is 
+[00:16:10] play our animation we can see this is the effect at this point the pages stop 
+[00:16:12] the effect at this point the pages stop 
+[00:16:12] the effect at this point the pages stop then they resume right here and it fills 
+[00:16:14] then they resume right here and it fills 
+[00:16:14] then they resume right here and it fills out the rest of the book 
+[00:16:16] out the rest of the book 
+[00:16:16] out the rest of the book that is looking very good and now we 
+[00:16:18] that is looking very good and now we 
+[00:16:18] that is looking very good and now we need to fix the animation for the spine 
+[00:16:20] need to fix the animation for the spine 
+[00:16:20] need to fix the animation for the spine itself so let's go back over to 
+[00:16:23] itself so let's go back over to 
+[00:16:23] itself so let's go back over to collection 1 and select the spine 
+[00:16:26] collection 1 and select the spine 
+[00:16:26] collection 1 and select the spine this keyframe right here we need to 
+[00:16:27] this keyframe right here we need to 
+[00:16:28] this keyframe right here we need to duplicate it so it actually remains open 
+[00:16:29] duplicate it so it actually remains open 
+[00:16:30] duplicate it so it actually remains open for a period of time so i'm going to 
+[00:16:31] for a period of time so i'm going to 
+[00:16:31] for a period of time so i'm going to shift d it and move it over to the right 
+[00:16:34] shift d it and move it over to the right 
+[00:16:34] shift d it and move it over to the right then i'll select both of these keyframes 
+[00:16:36] then i'll select both of these keyframes 
+[00:16:36] then i'll select both of these keyframes and drag them over 
+[00:16:38] and drag them over 
+[00:16:38] and drag them over then all we have to do is line them up 
+[00:16:40] then all we have to do is line them up 
+[00:16:40] then all we have to do is line them up so we can see here it remains open for a 
+[00:16:43] so we can see here it remains open for a 
+[00:16:43] so we can see here it remains open for a little bit and then at a certain point 
+[00:16:44] little bit and then at a certain point 
+[00:16:44] little bit and then at a certain point the pages start to move 
+[00:16:46] the pages start to move 
+[00:16:46] the pages start to move and then right there that is when i want 
+[00:16:48] and then right there that is when i want 
+[00:16:48] and then right there that is when i want the book to start closing so what i'll 
+[00:16:50] the book to start closing so what i'll 
+[00:16:50] the book to start closing so what i'll do is i will select both of these 
+[00:16:52] do is i will select both of these 
+[00:16:52] do is i will select both of these drag them this way 
+[00:16:54] drag them this way 
+[00:16:54] drag them this way and then i'll select this keyframe and 
+[00:16:55] and then i'll select this keyframe and 
+[00:16:56] and then i'll select this keyframe and drag it a little bit more to the right 
+[00:16:57] drag it a little bit more to the right 
+[00:16:57] drag it a little bit more to the right so it slows it down 
+[00:17:00] so it slows it down 
+[00:17:00] so it slows it down and there we go and finally you're just 
+[00:17:01] and there we go and finally you're just 
+[00:17:01] and there we go and finally you're just going to need to tweak it a little bit 
+[00:17:03] going to need to tweak it a little bit 
+[00:17:03] going to need to tweak it a little bit you can see here the page is actually 
+[00:17:05] you can see here the page is actually 
+[00:17:05] you can see here the page is actually inside it so what i'll do is i'll just 
+[00:17:06] inside it so what i'll do is i'll just 
+[00:17:06] inside it so what i'll do is i'll just drag it this way 
+[00:17:08] drag it this way 
+[00:17:08] drag it this way and just like that we can see it lines 
+[00:17:11] and just like that we can see it lines 
+[00:17:11] and just like that we can see it lines up perfectly 
+[00:17:14] 
+[00:17:14] and there you go you can control the 
+[00:17:16] and there you go you can control the 
+[00:17:16] and there you go you can control the speed of the pages if you want it to go 
+[00:17:17] speed of the pages if you want it to go 
+[00:17:17] speed of the pages if you want it to go a little bit faster what you'll have to 
+[00:17:19] a little bit faster what you'll have to 
+[00:17:19] a little bit faster what you'll have to do is go back into collection two 
+[00:17:21] do is go back into collection two 
+[00:17:22] do is go back into collection two i'll restart and select them all 
+[00:17:24] i'll restart and select them all 
+[00:17:24] i'll restart and select them all in the offset what you need to do first 
+[00:17:26] in the offset what you need to do first 
+[00:17:26] in the offset what you need to do first is set this back down to zero and then 
+[00:17:28] is set this back down to zero and then 
+[00:17:28] is set this back down to zero and then click on offset animation and that will 
+[00:17:30] click on offset animation and that will 
+[00:17:30] click on offset animation and that will reset everything then you can set it up 
+[00:17:33] reset everything then you can set it up 
+[00:17:33] reset everything then you can set it up to let's say if you want it to be slower 
+[00:17:35] to let's say if you want it to be slower 
+[00:17:35] to let's say if you want it to be slower you can set it up to four 
+[00:17:36] you can set it up to four 
+[00:17:36] you can set it up to four then what that will do you can see here 
+[00:17:38] then what that will do you can see here 
+[00:17:38] then what that will do you can see here the pages are moving a lot slower now 
+[00:17:41] the pages are moving a lot slower now 
+[00:17:41] the pages are moving a lot slower now if you want it to be faster first you 
+[00:17:43] if you want it to be faster first you 
+[00:17:43] if you want it to be faster first you have to reset it so set it back down to 
+[00:17:44] have to reset it so set it back down to 
+[00:17:44] have to reset it so set it back down to zero restart the animation offset it 
+[00:17:48] zero restart the animation offset it 
+[00:17:48] zero restart the animation offset it then if we go with a decimal value like 
+[00:17:50] then if we go with a decimal value like 
+[00:17:50] then if we go with a decimal value like point five for example the animation 
+[00:17:52] point five for example the animation 
+[00:17:52] point five for example the animation will be really fast 
+[00:17:55] will be really fast 
+[00:17:55] will be really fast but i'm going to leave it at two i think 
+[00:17:57] but i'm going to leave it at two i think 
+[00:17:57] but i'm going to leave it at two i think that is pretty good so i'm just going to 
+[00:17:58] that is pretty good so i'm just going to 
+[00:17:58] that is pretty good so i'm just going to control z that a couple times just like 
+[00:18:00] control z that a couple times just like 
+[00:18:00] control z that a couple times just like that 
+[00:18:01] that 
+[00:18:01] that one thing that i forgot to mention is if 
+[00:18:03] one thing that i forgot to mention is if 
+[00:18:03] one thing that i forgot to mention is if you don't like the height of the pages 
+[00:18:05] you don't like the height of the pages 
+[00:18:05] you don't like the height of the pages what you can do is select all these 
+[00:18:06] what you can do is select all these 
+[00:18:06] what you can do is select all these empties down here for the hook objects 
+[00:18:09] empties down here for the hook objects 
+[00:18:09] empties down here for the hook objects and then just scale them down along the 
+[00:18:10] and then just scale them down along the 
+[00:18:10] and then just scale them down along the z axis this will bring the roundness of 
+[00:18:13] z axis this will bring the roundness of 
+[00:18:13] z axis this will bring the roundness of the pages down a lot lower and i think 
+[00:18:15] the pages down a lot lower and i think 
+[00:18:15] the pages down a lot lower and i think that looks just a little bit better you 
+[00:18:17] that looks just a little bit better you 
+[00:18:17] that looks just a little bit better you can even go higher if you want them to 
+[00:18:19] can even go higher if you want them to 
+[00:18:19] can even go higher if you want them to be higher like this or lower just 
+[00:18:20] be higher like this or lower just 
+[00:18:20] be higher like this or lower just depending on what you want 
+[00:18:22] depending on what you want 
+[00:18:22] depending on what you want so there you go that is how you animate 
+[00:18:24] so there you go that is how you animate 
+[00:18:24] so there you go that is how you animate a book opening in blender the next step 
+[00:18:27] a book opening in blender the next step 
+[00:18:27] a book opening in blender the next step is to just add some textures uh one 
+[00:18:29] is to just add some textures uh one 
+[00:18:29] is to just add some textures uh one thing that one thing to keep in mind is 
+[00:18:31] thing that one thing to keep in mind is 
+[00:18:31] thing that one thing to keep in mind is that the texture will actually be a 
+[00:18:33] that the texture will actually be a 
+[00:18:33] that the texture will actually be a little bit warped on the piece of paper 
+[00:18:35] little bit warped on the piece of paper 
+[00:18:35] little bit warped on the piece of paper because of the hooked modifier so you're 
+[00:18:37] because of the hooked modifier so you're 
+[00:18:37] because of the hooked modifier so you're gonna have to scale the uv map just a 
+[00:18:39] gonna have to scale the uv map just a 
+[00:18:39] gonna have to scale the uv map just a little bit to make it look a little bit 
+[00:18:41] little bit to make it look a little bit 
+[00:18:41] little bit to make it look a little bit better but once you add in some textures 
+[00:18:43] better but once you add in some textures 
+[00:18:43] better but once you add in some textures and lighting and render out the 
+[00:18:44] and lighting and render out the 
+[00:18:44] and lighting and render out the animation you will have a really cool 
+[00:18:47] animation you will have a really cool 
+[00:18:47] animation you will have a really cool animation of a book opening 
+[00:18:49] animation of a book opening 
+[00:18:49] animation of a book opening if you created your own animation from 
+[00:18:51] if you created your own animation from 
+[00:18:51] if you created your own animation from this video make sure to send it to me on 
+[00:18:53] this video make sure to send it to me on 
+[00:18:53] this video make sure to send it to me on instagram at blendermade easy also 
+[00:18:55] instagram at blendermade easy also 
+[00:18:55] instagram at blendermade easy also thanks again to skillshare for 
+[00:18:57] thanks again to skillshare for 
+[00:18:57] thanks again to skillshare for sponsoring this video and i will see you 
+[00:18:59] sponsoring this video and i will see you 
+[00:18:59] sponsoring this video and i will see you in the next one 

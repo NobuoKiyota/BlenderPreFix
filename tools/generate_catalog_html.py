@@ -12,7 +12,10 @@ with open(ASSETS_DIR / "kasahara_campfire.b64.txt", "r") as f:
 with open(ASSETS_DIR / "crystal_cluster.b64.txt", "r") as f:
     crystal_b64 = f.read().strip()
 
-# 全行程詳細解説 Markdown / HTML
+with open(ASSETS_DIR / "book_page_turn.b64.txt", "r") as f:
+    book_b64 = f.read().strip()
+
+# 1. カサハラCG 焚き火ステップ
 kasahara_steps = [
     {
         "step": 1,
@@ -72,13 +75,65 @@ kasahara_steps = [
     }
 ]
 
+# 2. 本の開閉＆めくりステップ
+book_steps = [
+    {
+        "step": 1,
+        "title": "背表紙（Spine）と表紙（Cover）のモデリング ＆ ピボット移動",
+        "time": "00:00 - 04:00",
+        "how": "Cubeから背表紙（Spine: 幅0.16, 縦2.2, 厚0.04）と左右のハードカバーを作成。左右カバーの原点（Origin）を『背表紙と接するエッジ』へ移動し、背表紙を親（Parent）に指定。",
+        "why": "【原点移動が必須の理由】中心のままだと表紙がその場で回転して背表紙から外れてしまう。エッジに原点を置くことで蝶番（ヒンジ）として綺麗にパカッと開閉できる。【親子付けの理由】背表紙を移動・回転させた際に、表紙や中身のページ全体が一体となって追従するリグの土台となる。"
+    },
+    {
+        "step": 2,
+        "title": "ページ束（厚みブロック）の配置",
+        "time": "04:00 - 06:30",
+        "how": "左右の表紙の内側に、開いた本の土台となる厚みのある用紙ブロック（厚さ0.1m）を配置。断面（小口）に積層バンプを付与。",
+        "why": "【全ページを作らない理由】数百枚のページを個別ポリゴン化するとデータが激重になる。大半の固定ページは1つのブロックとしてまとめ、めくるページだけを個別メッシュにすることで圧倒的な軽量化とリアリズムを両立させる。"
+    },
+    {
+        "step": 3,
+        "title": "めくりページ（Turning Page）の高密度細分化 ＆ 原点設定",
+        "time": "06:30 - 08:00",
+        "how": "平面（幅1.35, 縦2.05）を作成し、めくり方向（X軸）に32分割のループカットを入れる。原点（Origin）を綴じ目（X=0）に配置。",
+        "why": "【X軸高密度分割の理由】ポリゴン数が少ないと紙が板のまま折れてしまい、滑らかなアーチ状の湾曲ができない。【綴じ目原点の理由】180度めくれて反対側に倒れる際、背表紙からページが引っ張られたり突き抜けたりする破綻を防止する。"
+    },
+    {
+        "step": 4,
+        "title": "Simple Deform (Bend) モディファイアによる紙のしなり表現",
+        "time": "08:00 - 09:50",
+        "how": "Simple Deform Modifier を追加し、Type: Bend（曲げ）、Axis: Z に設定。角度（Angle）を 0° → -55° → 0° と変化させる。",
+        "why": "【回転だけではダメな理由】単なる回転では鉄板や下敷きを裏返すような硬い板に見える。【Bendの理由】ページが持ち上がる途中で先端が空気抵抗としなりで大きく湾曲し、着地に向かってフラットに戻る『紙の弾性と柔軟性』をたった1つのパラメータで完全制御できる。"
+    },
+    {
+        "step": 5,
+        "title": "Hook Modifier ＋ 頂点グループによる先端めくれ制御",
+        "time": "09:50 - 13:00",
+        "how": "ページのめくり角（コーナー頂点群）にグラデーションウェイトを割り当て、Hook Modifier を追加して Empty（制御点）にバインド。",
+        "why": "【人間のめくり動作の再現】紙をめくる時、全体が一斉に上がるのではなく『指が掛かった角（コーナー）が先行してめくれ上がり、後から全体がついてくる』。Hookを使うことで、この指先の物理動作を自然に再現できる。"
+    },
+    {
+        "step": 6,
+        "title": "回転と曲げのイージング複合キーフレーム設計",
+        "time": "13:00 - 16:00",
+        "how": "回転Y（0°→90°→180°）と Bend角度（0°→-55°→0°）のピークタイミングをわずかにオフセットし、ベジェイージングで補間。",
+        "why": "【緩急の重要性】等速直線運動（リニア）では機械的になる。離陸時はゆっくり、真上を素早く通過し、着地時にフワリと減速する緩急をつけることで、風をはらんでパサッとめくれる有機的な空気感が生まれる。"
+    },
+    {
+        "step": 7,
+        "title": "複数ページのオフセット複製（パラパラめくり）",
+        "time": "16:00 - 19:00",
+        "how": "ページを複製し、タイムライン上でキーフレームを8〜12フレーム後ろへずらして連続シーケンスを構築。",
+        "why": "【連続モーションの美しさ】前のページが倒れきる直前に次のページが追いかけてめくれ始めることで、魔法書や読書のようなリッチなモーショングラフィックスに昇華される。"
+    }
+]
+
 html_template = f'''<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blender Skill & Procedural Catalog - 自走学習成果ポータル</title>
-  <!-- Google model-viewer for 3D GLB preview -->
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
   <style>
     :root {{
@@ -466,7 +521,7 @@ html_template = f'''<!DOCTYPE html>
       letter-spacing: 0.5px;
     }}
 
-    /* Audio / Game Integration Table */
+    /* Audio Table */
     .audio-table {{
       width: 100%;
       border-collapse: collapse;
@@ -552,31 +607,53 @@ html_template = f'''<!DOCTYPE html>
       <span class="badge">自走学習成果ポータル</span>
     </div>
     <div class="stats" id="catalog-stats">
-      登録スキル: 3件 | Blender 5.2.1 LTS | スタンドアロン動作
+      登録スキル: 4件 | Blender 5.2.1 LTS | スタンドアロン動作
     </div>
   </header>
 
   <div class="main-container">
-    <!-- Left Sidebar -->
     <div class="sidebar">
       <div class="search-box">
         <input type="text" id="search-input" placeholder="スキル・エフェクトを検索..." oninput="filterItems()">
       </div>
-      <div class="item-list" id="item-list">
-        <!-- JS renders cards -->
-      </div>
+      <div class="item-list" id="item-list"></div>
     </div>
 
-    <!-- Right Content Area -->
-    <div class="content-area" id="detail-view">
-      <!-- Detailed item content renders here -->
-    </div>
+    <div class="content-area" id="detail-view"></div>
   </div>
 
   <script>
     const KASAHARA_STEPS = {json.dumps(kasahara_steps, ensure_ascii=False)};
+    const BOOK_STEPS = {json.dumps(book_steps, ensure_ascii=False)};
 
     const CATALOG_DATA = [
+      {{
+        id: "book_page_turn",
+        title: "本を開いてページをめくるアニメーション (Book Page Turn)",
+        category: "アニメーション ＆ リグ / オブジェクト",
+        tags: ["Simple Deform (Bend)", "Hook Modifier", "Hinge Pivot", "Multi-Page Offset"],
+        thumb: "assets/book_page_turn_cut1.png",
+        glbBase64: "data:model/gltf-binary;base64,{book_b64}",
+        cuts: [
+          {{ label: "🎬 Cut 1: 正面斜めシネマティック（しなるめくりページ全体像）", src: "assets/book_page_turn_cut1.png" }},
+          {{ label: "📖 Cut 2: ページのしなり曲面クローズアップ（美しいアーチ湾曲）", src: "assets/book_page_turn_cut2.png" }},
+          {{ label: "📐 Cut 3: 45°斜め上俯瞰（左右ページブロックと本全体の構造）", src: "assets/book_page_turn_cut3.png" }},
+          {{ label: "🔍 Cut 4: 綴じ目と背表紙のローアングル（ヒンジ幾何学）", src: "assets/book_page_turn_cut4.png" }}
+        ],
+        summary: "Blender Made Easy様のチュートリアルを完全コード化。ハードカバーの開閉ヒンジリグ、厚みのある用紙ブロック、Simple Deform (Bend) と Hook による滑らかで有機的な紙のしなりアニメーションを一発生成。",
+        source: {{
+          title: "Blender Made Easy: Blender Tutorial - Book Opening Animation",
+          url: "https://www.youtube.com/watch?v=geyC6FfMFf8"
+        }},
+        steps: BOOK_STEPS,
+        soundMapping: [
+          {{ slot: "Book_Cover_Leather_Mat", surface: "Leather", audio: "Sound_Book_Close_Thud", event: "本の開閉・バタンと閉じる重厚な革接触音" }},
+          {{ slot: "Book_Page_Paper_Mat", surface: "Paper", audio: "Sound_Page_Turn_Whoosh", event: "ページが風をはらんでめくれるパサッという紙音" }},
+          {{ slot: "Book_Pages_Block_Mat", surface: "PaperBlock", audio: "Sound_Page_Riffle", event: "本の小口をパラパラ弾く連続紙擦れ音" }}
+        ],
+        scriptPath: "generators/gen_book_page_turn.py",
+        codeSnippet: `import bpy, sys\\n# Blender 5.2/3.6 のスクリプトエディタで実行するだけで一発生成\\nexec(open(r"e:/BlenderPreFix/generators/gen_book_page_turn.py", encoding="utf-8").read())`
+      }},
       {{
         id: "kasahara_campfire",
         title: "リアル焚き火シミュレーション ＆ シェーダー (MantaFlow 火炎)",
@@ -740,9 +817,7 @@ html_template = f'''<!DOCTYPE html>
           <span class="badge">${{item.category}}</span>
         </div>
 
-        <!-- 3D Viewer & Multi-Cut Gallery Grid -->
         <div class="visual-grid">
-          <!-- 3D Interactive (Base64 direct embedded, zero CORS issue) -->
           <div class="viewer-panel">
             <div class="panel-header-bar">
               <span>🎮 3D インタラクティブ (ドラッグ回転 / ホイール拡縮)</span>
@@ -756,12 +831,11 @@ html_template = f'''<!DOCTYPE html>
                 camera-controls 
                 shadow-intensity="1.5" 
                 exposure="1.1"
-                camera-target="0m 0.6m 0m">
+                camera-target="0m 0.3m 0m">
               </model-viewer>
             </div>
           </div>
 
-          <!-- Multi-Cut Cycles Gallery -->
           <div class="gallery-panel">
             <div class="panel-header-bar">
               <span>📷 Cycles 高画質レンダリング (マルチカット切り替え)</span>
@@ -777,13 +851,12 @@ html_template = f'''<!DOCTYPE html>
           </div>
         </div>
 
-        <!-- Deep Step-by-Step Analysis Section (Most Important) -->
         <div class="section-card">
           <div class="section-title">
             <span>🔬 全制作工程 ＆「その手順の意味・Why」の徹底分析</span>
           </div>
           <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;">
-            動画内の単なるパラメータ値だけでなく、「なぜその形状なのか」「なぜその数値なのか」「なぜそのノードを繋ぐのか」の制作理論と物理背景を事細かに体系化しています。
+            動画内の単なるパラメータ値だけでなく、「なぜその形状なのか」「なぜその数値なのか」「なぜそのモディファイアを使うのか」の制作理論と物理背景を事細かに体系化しています。
           </p>
           <div class="step-list">
             ${{stepCards}}
@@ -793,7 +866,6 @@ html_template = f'''<!DOCTYPE html>
           </a>
         </div>
 
-        <!-- Audio & Surface ID Section -->
         <div class="section-card">
           <div class="section-title">🔊 ゲームエンジン ＆ サウンド連動仕様 (Wwise / CRI / Unity / UE)</div>
           <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">
@@ -814,7 +886,6 @@ html_template = f'''<!DOCTYPE html>
           </table>
         </div>
 
-        <!-- One-Click Code Section -->
         <div class="section-card">
           <div class="section-title">⚡ 一発生成コード (One-Click Python Generator)</div>
           <div class="code-container">
@@ -860,5 +931,5 @@ output_path = BASE_DIR / "catalog" / "index.html"
 with open(output_path, "w", encoding="utf-8") as f:
     f.write(html_template)
 
-print(f"Successfully generated ultimate catalog at: {output_path}")
+print(f"Successfully generated updated catalog at: {output_path}")
 print(f"HTML File Size: {output_path.stat().st_size / 1024:.1f} KB")
