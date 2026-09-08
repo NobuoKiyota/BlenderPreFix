@@ -10,3 +10,5 @@ scratch/
 __pycache__/
 catalog_body.txt
 rock_dump.txt
+cache_fluid_*/
+cache_smoke_*/
