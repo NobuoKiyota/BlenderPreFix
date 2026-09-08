@@ -1,0 +1,80 @@
+{
+  "id": "lodqjYDXIxk",
+  "title": "【Blender】初めての炎！【焚き火篇】リアルな炎を簡単に作れます！",
+  "uploader": "カサハラ CG",
+  "duration": 694,
+  "description": "================\n今回はリアルな焚き火を作っていきます！\n\n一言で火と言っても様々なタイプのものがありますよね。\n焚き火の作り方はその中でも基礎的な機能を使っていくので\n初めて火を作る方には持ってこいの題材だと思います！\n\nノードを組んでいったりするのが\n多少面倒ですが、最後まで見ていただければ\nリアルな焚き火が作れるようになります！\n\n今回の動画が参考になれば嬉しいです！\n\n▼もくじ▼\n00:00 オープニング\n00:23 球体・ドメインを追加\n00:58 風の影響を追加\n01:15 炎の詳細設定\n03:01 炎をベイク\n03:50 背景などを調整\n04:13 炎のマテリアル設定\n07:17 焚き火の土台を設置\n07:56 ライトを追加\n08:17 炎の発生源を調整\n08:44 煙を無しにする\n09:00 カメラを追加\n10:03 レンダリング設定\n10:48 エンディング\n\n▼紹介した過去動画▼\n【Blender+Quixel Bridge】連携の方法を解説！\nhttps://youtu.be/fO59EPzKKdA\n\n▼使用機材▼\nCamera : Sony a7s3\nLens : TAMRON 28-75mm F/2.8\nMic : Sennheiser MKE 600\nPC : 【WIndows】FRONTIER BTO 【Mac】Mac book pro 15\nEdit：Davinci Resolve, After Effects\nMusic : Epidemic Sound,Artlist\n\n動画をご視聴いただきありがとうございます！\nBlender、After Effects、Unreal Engine の解説など随時更新予定です。\nいいね・コメント・チャンネル登録して頂けたら嬉しいです！\n\n▼登録はこちら▼\nYouTube :\nhttps://www.youtube.com/channel/UCLYwMiF874DFoF6fkumzhxg\n\nTwitter :\nhttps://twitter.com/kasaharacg\n\nInstagram :\nhttps://www.instagram.com/kasaharacg/",
+  "webpage_url": "https://www.youtube.com/watch?v=lodqjYDXIxk",
+  "chapters": [
+    {
+      "start_time": 0,
+      "title": "オープニング",
+      "end_time": 23
+    },
+    {
+      "start_time": 23,
+      "title": "球体・ドメインを追加",
+      "end_time": 58
+    },
+    {
+      "start_time": 58,
+      "title": "風の影響を追加",
+      "end_time": 75
+    },
+    {
+      "start_time": 75,
+      "title": "炎の詳細設定",
+      "end_time": 181
+    },
+    {
+      "start_time": 181,
+      "title": "炎をベイク",
+      "end_time": 230
+    },
+    {
+      "start_time": 230,
+      "title": "背景などを調整",
+      "end_time": 253
+    },
+    {
+      "start_time": 253,
+      "title": "炎のマテリアル設定",
+      "end_time": 437
+    },
+    {
+      "start_time": 437,
+      "title": "焚き火の土台を設置",
+      "end_time": 476
+    },
+    {
+      "start_time": 476,
+      "title": "ライトを追加",
+      "end_time": 497
+    },
+    {
+      "start_time": 497,
+      "title": "炎の発生源を調整",
+      "end_time": 524
+    },
+    {
+      "start_time": 524,
+      "title": "煙を無しにする",
+      "end_time": 540
+    },
+    {
+      "start_time": 540,
+      "title": "カメラを追加",
+      "end_time": 603
+    },
+    {
+      "start_time": 603,
+      "title": "レンダリング設定",
+      "end_time": 648
+    },
+    {
+      "start_time": 648,
+      "title": "エンディング",
+      "end_time": 694
+    }
+  ]
+}

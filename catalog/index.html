@@ -337,7 +337,7 @@
       <span class="badge">自走学習成果カタログ</span>
     </div>
     <div class="stats" id="catalog-stats">
-      登録スキル: 2件 | Blender 5.2.1 LTS
+      登録スキル: 3件 | Blender 5.2.1 LTS
     </div>
   </header>
 
@@ -360,6 +360,33 @@
 
   <script>
     const CATALOG_DATA = [
+      {
+        id: "kasahara_campfire",
+        title: "リアル焚き火シミュレーション ＆ シェーダー (MantaFlow 火炎)",
+        category: "VFX / 物理シミュレーション",
+        tags: ["MantaFlow", "Principled Volume", "Heat Attribute", "Driver Animation"],
+        thumb: "assets/kasahara_campfire.png",
+        glb: "assets/kasahara_campfire.glb",
+        png: "assets/kasahara_campfire.png",
+        summary: "カサハラCG様の焚き火チュートリアルを完全コード化。MantaFlow火炎シミュレーション、ヒート属性連動ColorRamp、#frameドライバによる有機的な炎の揺らめきを一発構築。",
+        source: {
+          title: "カサハラ CG: 【Blender】初めての炎！【焚き火篇】リアルな炎を簡単に作れます！",
+          url: "https://www.youtube.com/watch?v=lodqjYDXIxk"
+        },
+        techniques: [
+          "**MantaFlow 流体物理演算**: UV球（発生源）に Flow Type: FIRE、Fuel: 2.0、表面距離: 1.0、Cloudsテクスチャ (Size 0.1, Contrast 5.0) をバインド",
+          "**乱流フォースフィールド**: Turbulence (Strength: 0.4, Noise: 0.4) により風と気流のランダムな揺らぎを付与",
+          "**適応ドメイン (Adaptive Domain)**: 演算領域を自動最小化し、解像度128分割、Vorticity 0.1、反応速度 1.0 で激しすぎない焚き火の炎を再現",
+          "**Principled Volume 核心シェーダー**: 煙（Density: 0.0）を消し、Attribute('heat') → ColorRamp (0.0黒/0.45白/0.7濃灰) × 50.0 に、#frame * 0.05 ドライバ付き Noise Texture を乗算合成してリアルな炎の放射強度・放射カラーをプロシージャル制御"
+        ],
+        soundMapping: [
+          { slot: "Kasahara_Fire_Volume_Mat", surface: "Fire", audio: "Sound_Campfire_Loop", event: "リアル焚き火環境ループ音 (Wwise/ADX2)" },
+          { slot: "Charred_Wood_Mat", surface: "Wood", audio: "Footstep_Wood_Charred", event: "炭化薪の接触音・足音" },
+          { slot: "Fire_Point_Light", surface: "Fire", audio: "Sound_Fire_Crackle", event: "火の粉のパチパチ爆ぜ音 (One-shot)" }
+        ],
+        scriptPath: "generators/gen_kasahara_campfire.py",
+        codeSnippet: `import bpy, sys\n# Blender 5.2/3.6 のスクリプトエディタで実行するだけで一発生成\nexec(open(r"e:/BlenderPreFix/generators/gen_kasahara_campfire.py", encoding="utf-8").read())`
+      },
       {
         id: "campfire_vfx",
         title: "スタイライズド焚き火 VFX (Stylized Campfire)",
