@@ -464,6 +464,76 @@
     .source-link:hover {
       text-decoration: underline;
     }
+  
+    /* Atomic Step-by-Step Table */
+    .atomic-step-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 8px;
+      margin-top: 12px;
+    }
+    .atomic-step-row {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .atomic-step-row:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(234, 118, 0, 0.4);
+    }
+    .step-num-col {
+      padding: 10px 14px;
+      width: 80px;
+      font-family: "Fira Code", monospace;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--accent);
+      border-left: 3px solid var(--accent);
+      vertical-align: top;
+      background: rgba(234, 118, 0, 0.05);
+      border-radius: 6px 0 0 6px;
+    }
+    .step-how-col {
+      padding: 10px 14px;
+      width: 48%;
+      font-size: 0.86rem;
+      line-height: 1.5;
+      vertical-align: top;
+    }
+    .step-how-title {
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .step-how-cmd {
+      font-family: "Fira Code", Consolas, monospace;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid var(--border);
+      padding: 4px 8px;
+      border-radius: 4px;
+      color: var(--accent-cyan);
+      font-size: 0.82rem;
+      display: inline-block;
+      margin-top: 3px;
+    }
+    .step-why-col {
+      padding: 10px 14px;
+      font-size: 0.84rem;
+      line-height: 1.5;
+      color: #cfd3dc;
+      border-radius: 0 6px 6px 0;
+      vertical-align: top;
+      background: rgba(255, 255, 255, 0.015);
+    }
+    .why-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
   </style>
 </head>
 <body>
@@ -493,8 +563,10 @@
   </div>
 
   <script>
-    const KASAHARA_STEPS = [{"step": 1, "title": "球体エミッターの追加 ＆ クイック煙の適用", "time": "00:23 - 00:58", "how": "初期オブジェクトを削除後、Shift+A で『UV球』を追加し Sキーで 0.4 に縮小。オブジェクトメニュー ＞ クイックエフェクト ＞『クイック煙』を実行。", "why": "【球体の理由】焚き火の火床はある程度の体積を持った熱源であるため、全方位に均等に燃焼ガスを噴出させるのに最適。【0.4縮小の理由】デフォルトの直径2mだと大爆発になるため、キャンプ用焚き火の火床サイズ（直径約40cm）に合わせる。【クイック煙の理由】ドメイン（計算領域外枠）と初期ボリュームマテリアルが一発で自動生成され、面倒な初期設定を大幅短縮できる。"}, {"step": 2, "title": "乱流フォースフィールド（Turbulence）の付加", "time": "00:58 - 01:15", "how": "Shift+A ＞ フォースフィールド ＞『乱流』を追加。物理演算プロパティで 強さ: 0.4、ノイズ量: 0.4 に設定。", "why": "【無風の弊害】フォースが無いと熱気流が真上に垂直上昇するだけの不自然な円柱炎になる。【乱流の理由】一定方向の『風』ではなく、空間全域でランダムな渦を発生させる『乱流』を使うことで、炎の先端がチラチラと舞い上がる自然なゆらめきが生まれる。【0.4の理由】1.0以上だと吹き散らされて形が崩れ、0.1だと直線的すぎる。0.4が穏やかな焚き火の黄金比。"}, {"step": 3, "title": "発生源（フロー）の詳細設定（火炎化 ＆ Cloudsテクスチャ）", "time": "01:15 - 02:10", "how": "球体のフロータイプを『火炎』に変更。燃料: 2.0、表面からの発生距離: 1.0。テクスチャにチェックを入れ『クラウド（Clouds）』テクスチャ（サイズ: 0.1, コントラスト: 5.0）を割り当て。", "why": "【火炎化の理由】初期値の煙を止め、純粋な燃焼ガスシミュレーションに集中。【燃料2.0の理由】燃焼持続時間を伸ばし、炎が勢いよく上部まで伸びるようにする。【表面距離1.0の理由】球体内部〜周囲1mの空間からガスを発生させ火の根元に厚みを出す。【Cloudsテクスチャ（超重要）】ツルッとした球体型の炎を打破するため、高コントラストなノイズで『ガスが出る場所・出ない場所』の激しいムラを作り、幾筋にも千切れて立ち上る有機的な炎の形状を生み出す。"}, {"step": 4, "title": "ドメインの解像度 ＆ 物理挙動チューニング", "time": "02:10 - 03:01", "how": "ドメインの『分割の解像度』を 128 に設定。『適応ドメイン』にチェック。火炎タブで『渦度』を 0.1、『反応速度』を 1.0 に設定。", "why": "【解像度128の理由】ボクセルサイズを微細化し、炎のブロック状モザイク感を解消して滑らかな流体ディテールを再現。【適応ドメインの理由】炎が存在する空間のみバウンディングボックスを自動伸縮させ、無駄な空間計算を省きメモリ消費とベイク時間を大幅削減。【渦度0.1・反応速度1.0】激しい爆発ではなく、焚き火らしいゆったりとした渦巻き速度に抑える。"}, {"step": 5, "title": "シミュレーションデータのベイク（事前計算）", "time": "03:01 - 03:50", "how": "キャッシュタイプを『モジュール』、リジューム可にチェック、終了フレームを 200 に設定し『データをベイク』を実行。", "why": "【ベイクの必要性】流体計算は超高負荷なため、リアルタイム再生ではコマ落ちし正確な形状確認ができない。ディスクにフレームごとの物理データを固定保存することで、レンダリング時の安定性を担保。【リジューム可】途中でクラッシュしても中断したフレームから再開できる。"}, {"step": 6, "title": "背景暗闇化 ＆ Cycles パストレーシング設定", "time": "03:50 - 04:13", "how": "ワールドカラーを完全な黒（RGB 0,0,0）に設定。レンダーエンジンを『Cycles』、デバイス『GPU』、サンプル数『64』、デノイズON。", "why": "【黒背景の理由】炎は自発光オブジェクトであるため、周囲が明るいと発光感が白飛び・減衰する。暗闇にすることで鮮烈な炎のグラデーションを際立たせる。【Cyclesの理由】Eeveeでは難しい『炎の光が薪や地面を物理的に照らし出す間接光（GI）』をパストレーシングで忠実に計算するため。"}, {"step": 7, "title": "Principled Volume 核心シェーダーの構築（heat属性 ＆ #frame）", "time": "04:13 - 07:17", "how": "ドメインのマテリアルで、Attributeノード（name: 'heat'）を追加。ColorRamp（黒→白→濃灰）× 50.0 に、Mapping（Z位置に #frame ドライバ）連動の Noise Texture（Scale 8, Detail 9.2, Distort 1）を乗算合成して放射強度へ接続。別ColorRamp（橙→黄）を放射色へ接続。Densityは0.0。", "why": "【heat属性の役割】シミュレーション内部の熱量データ（0〜1）を取り出し、温度が高い中心部を強く発光させる。【濃灰を挟む理由】白の右に濃灰を置くことで、炎の芯がピーク発光し、表面に向かって滑らかに透明へフェードアウトする。【乗算50の理由】CyclesのHDR空間で十分な発光強度を確保。【#frameドライバ（神技法）】シミュレーションの動きに加え、シェーダー内部のノイズがZ軸方向に高速スクロールすることで、炎の内部にチラチラと動く超微細な繊維ディテールが付加される。"}, {"step": 8, "title": "薪（土台）の配置 ＆ 炎中心ポイントライト ＆ 最終仕上げ", "time": "07:17 - 10:48", "how": "炎の足元に薪を井桁・円錐状にクロス配置。炎の中心やや高めに暖色ポイントライト（500〜850W）を配置。ドメインの Density を 0.0 にして煙を消去。", "why": "【ポイントライト追加の理由】ボリューム自体の発光はCyclesでノイズ（ファイアフライ）が出やすく照り返し計算が重い。中心にライトを置くことで、薪の表面をクリアかつ高速に照らしドラマチックな陰影を作る。【Density 0.0の理由】微量に発生する黒煙（煤）を完全に透明化し、透き通るような美しい炎の光だけを抽出するため。"}];
-    const BOOK_STEPS = [{"step": 1, "title": "背表紙（Spine）と表紙（Cover）のモデリング ＆ ピボット移動", "time": "00:00 - 04:00", "how": "Cubeから背表紙（Spine: 幅0.16, 縦2.2, 厚0.04）と左右のハードカバーを作成。左右カバーの原点（Origin）を『背表紙と接するエッジ』へ移動し、背表紙を親（Parent）に指定。", "why": "【原点移動が必須の理由】中心のままだと表紙がその場で回転して背表紙から外れてしまう。エッジに原点を置くことで蝶番（ヒンジ）として綺麗にパカッと開閉できる。【親子付けの理由】背表紙を移動・回転させた際に、表紙や中身のページ全体が一体となって追従するリグの土台となる。"}, {"step": 2, "title": "ページ束（厚みブロック）の配置", "time": "04:00 - 06:30", "how": "左右の表紙の内側に、開いた本の土台となる厚みのある用紙ブロック（厚さ0.1m）を配置。断面（小口）に積層バンプを付与。", "why": "【全ページを作らない理由】数百枚のページを個別ポリゴン化するとデータが激重になる。大半の固定ページは1つのブロックとしてまとめ、めくるページだけを個別メッシュにすることで圧倒的な軽量化とリアリズムを両立させる。"}, {"step": 3, "title": "めくりページ（Turning Page）の高密度細分化 ＆ 原点設定", "time": "06:30 - 08:00", "how": "平面（幅1.35, 縦2.05）を作成し、めくり方向（X軸）に32分割のループカットを入れる。原点（Origin）を綴じ目（X=0）に配置。", "why": "【X軸高密度分割の理由】ポリゴン数が少ないと紙が板のまま折れてしまい、滑らかなアーチ状の湾曲ができない。【綴じ目原点の理由】180度めくれて反対側に倒れる際、背表紙からページが引っ張られたり突き抜けたりする破綻を防止する。"}, {"step": 4, "title": "Simple Deform (Bend) モディファイアによる紙のしなり表現", "time": "08:00 - 09:50", "how": "Simple Deform Modifier を追加し、Type: Bend（曲げ）、Axis: Z に設定。角度（Angle）を 0° → -55° → 0° と変化させる。", "why": "【回転だけではダメな理由】単なる回転では鉄板や下敷きを裏返すような硬い板に見える。【Bendの理由】ページが持ち上がる途中で先端が空気抵抗としなりで大きく湾曲し、着地に向かってフラットに戻る『紙の弾性と柔軟性』をたった1つのパラメータで完全制御できる。"}, {"step": 5, "title": "Hook Modifier ＋ 頂点グループによる先端めくれ制御", "time": "09:50 - 13:00", "how": "ページのめくり角（コーナー頂点群）にグラデーションウェイトを割り当て、Hook Modifier を追加して Empty（制御点）にバインド。", "why": "【人間のめくり動作の再現】紙をめくる時、全体が一斉に上がるのではなく『指が掛かった角（コーナー）が先行してめくれ上がり、後から全体がついてくる』。Hookを使うことで、この指先の物理動作を自然に再現できる。"}, {"step": 6, "title": "回転と曲げのイージング複合キーフレーム設計", "time": "13:00 - 16:00", "how": "回転Y（0°→90°→180°）と Bend角度（0°→-55°→0°）のピークタイミングをわずかにオフセットし、ベジェイージングで補間。", "why": "【緩急の重要性】等速直線運動（リニア）では機械的になる。離陸時はゆっくり、真上を素早く通過し、着地時にフワリと減速する緩急をつけることで、風をはらんでパサッとめくれる有機的な空気感が生まれる。"}, {"step": 7, "title": "複数ページのオフセット複製（パラパラめくり）", "time": "16:00 - 19:00", "how": "ページを複製し、タイムライン上でキーフレームを8〜12フレーム後ろへずらして連続シーケンスを構築。", "why": "【連続モーションの美しさ】前のページが倒れきる直前に次のページが追いかけてめくれ始めることで、魔法書や読書のようなリッチなモーショングラフィックスに昇華される。"}];
+
+    const BOOK_ATOMIC = [{"num": "001", "title": "初期Cubeの削除", "how": "初期Cube選択 > `X` > `Enter`", "why": "シーンをクリーンにし、ゼロから正確な寸法の本を構築するため。"}, {"num": "002", "title": "背表紙Cubeの生成", "how": "`Shift + A` > `メッシュ` > `立方体 (Cube)`", "why": "本の中心となる背表紙（Spine）のベースを作成。"}, {"num": "003", "title": "トランスフォームサイドバー表示", "how": "`N` キー", "why": "正確なミリ単位の寸法（Dimensions）を直接入力するため。"}, {"num": "004", "title": "背表紙の寸法設定", "how": "Dimensions の `X: 0.16m`, `Y: 2.2m`, `Z: 0.04m` を入力", "why": "一般的なハードカバー洋書の背表紙プロポーションに合わせる。"}, {"num": "005", "title": "背表紙のリネーム", "how": "`F2` > `Book_Spine` と入力 > `Enter`", "why": "今後増える表紙やページとの親子関係で誤認を防ぐため。"}, {"num": "006", "title": "トランスフォーム適用", "how": "`Ctrl + A` > `全トランスフォーム (All Transforms)`", "why": "スケール値が 1.0 にリセットされないと、今後のモディファイアが不等比に歪むため。"}, {"num": "007", "title": "右表紙の複製", "how": "`Shift + D` > `Enter`", "why": "背表紙と同じ厚みと高さを持つ右ハードカバーを作成。"}, {"num": "008", "title": "右表紙のリネーム", "how": "`F2` > `Book_Cover_Right` > `Enter`", "why": "左右のカバーの回転方向を個別に管理するため。"}, {"num": "009", "title": "右表紙の幅拡張", "how": "Dimensions の `X: 1.5m`", "why": "B5/A4サイズの用紙を包み込む十分な表紙幅を確保。"}, {"num": "010", "title": "右表紙のヒンジ位置合わせ", "how": "`G` > `X` > `0.83m` 入力", "why": "背表紙の右端にカバーの左端がピッタリ接するようにスナップ。"}, {"num": "011", "title": "左表紙の複製と位置合わせ", "how": "`Cover_Right` 選択 > `Shift + D` > `X` > `-1.66m` 入力", "why": "背表紙の左端に対称に左ハードカバーを配置。"}, {"num": "012", "title": "左表紙のリネーム", "how": "`F2` > `Book_Cover_Left` > `Enter`", "why": "左開きアニメーションのターゲットを明確化。"}, {"num": "013", "title": "右表紙の編集モードへ", "how": "`Cover_Right` 選択 > `Tab` キー", "why": "ヒンジとなる境界エッジを選択するため。"}, {"num": "014", "title": "ヒンジエッジの選択", "how": "辺選択モード（`2`） > 背表紙側の縦の辺を選択", "why": "表紙の開閉ピボット（回転軸）を蝶番エッジに固定するため。"}, {"num": "015", "title": "3Dカーソルをエッジへ移動", "how": "`Shift + S` > `カーソル → 選択物 (Cursor to Selected)`", "why": "選択したエッジの正確な位置に3Dカーソルを一時配置。"}, {"num": "016", "title": "オブジェクトモード復帰", "how": "`Tab` キー", "why": "オブジェクトの原点（Origin）変更操作を行うため。"}, {"num": "017", "title": "右表紙の原点を3Dカーソルへ設定", "how": "右クリック > `原点を設定` > `原点を 3D カーソルへ移動`", "why": "表紙の中心ではなくエッジを軸としてパカッと開閉できるようにする。"}, {"num": "018", "title": "左表紙の原点をヒンジエッジへ設定", "how": "同様に `Cover_Left` の背表紙側エッジに原点を移動", "why": "左カバーも背表紙を軸として対称に開くようにする。"}, {"num": "019", "title": "背表紙への親子付け（ペアレント）", "how": "`Cover_Left` と `Cover_Right` を選択 > 最後に `Book_Spine` を選択 > `Ctrl + P` > `オブジェクト (トランスフォーム維持)`", "why": "本全体を移動・回転させた時に、表紙が連動して追従するリグの基本骨格を完成させる。"}, {"num": "020", "title": "右ページ束（厚みブロック）Cube生成", "how": "`Shift + A` > `メッシュ` > `立方体`", "why": "開いた本の土台となる右側の固定ページ束を作成。"}, {"num": "021", "title": "右ページ束の寸法設定", "how": "Dimensions の `X: 1.35m`, `Y: 2.05m`, `Z: 0.1m`", "why": "表紙より一回り小さく（チリを確保し）、数百枚分の厚みを表現。"}, {"num": "022", "title": "右ページ束の配置とリネーム", "how": "`G` で右カバーの内側に配置 > `F2` > `Book_Pages_Block_Right`", "why": "開いた右カバーの上に安定して載るようにする。"}, {"num": "023", "title": "左ページ束の複製と配置", "how": "`Shift + D` > `X` で左側へ配置 > `F2` > `Book_Pages_Block_Left`", "why": "左側の固定ページ束を対称配置。"}, {"num": "024", "title": "ページ束の親子付け", "how": "各ブロックを選択 > 対応する表紙を選択 > `Ctrl + P`", "why": "表紙を開閉した際に、ページ束が一緒に動くようにする。"}, {"num": "025", "title": "めくり用紙平面の生成", "how": "`Shift + A` > `メッシュ` > `平面 (Plane)`", "why": "実際に空中を舞ってめくれる個別の紙を生成。"}, {"num": "026", "title": "用紙の寸法設定", "how": "Dimensions の `X: 1.35m`, `Y: 2.05m`", "why": "ページ束の上面サイズと完全に一致させる。"}, {"num": "027", "title": "用紙のリネーム", "how": "`F2` > `Turning_Page`", "why": "アニメーションをつける主役オブジェクトを識別。"}, {"num": "028", "title": "用紙の原点を綴じ目（左端）へ移動", "how": "`Tab` > 左端の2頂点選択 > `Shift + S` > カーソルへ移動 > `Tab` > 原点を3Dカーソルへ設定", "why": "ページがめくれる時、背表紙の綴じ目から離れて飛ばないよう回転支点を固定。"}, {"num": "029", "title": "X軸方向の高密度ループカット（32分割）", "how": "`Tab` > `Ctrl + R` > マウスホイール回転で `32` に設定 > クリック2回で確定", "why": "細分化が不十分だと紙が折れ曲がる。32分割によって滑らかなアーチ湾曲が可能になる。"}, {"num": "030", "title": "Y軸方向のループカット（8分割）", "how": "`Ctrl + R` > ホイール回転で `8` に設定 > クリック2回で確定", "why": "縦方向のねじれやコーナーの引っ張りに耐えるトポロジーを形成。"}, {"num": "031", "title": "極薄ソリッド化モディファイア追加", "how": "モディファイア追加 > `ソリッド化 (Solidify)` > `厚さ: 0.002m`", "why": "CG特有のペラペラな0ポリ感を消し、実物の上質紙の微小な厚みを付与。"}, {"num": "032", "title": "スムースシェード設定", "how": "右クリック > `スムーズシェード`", "why": "湾曲した紙の表面のポリゴン境界を目立たなくする。"}, {"num": "033", "title": "Simple Deform (Bend) モディファイア追加", "how": "モディファイア追加 > `簡易変形 (Simple Deform)` > タイプ: `曲げ (Bend)`", "why": "ページが持ち上がる時の「紙のしなり・アーチ」を1つのパラメータで制御。"}, {"num": "034", "title": "Bend軸の設定", "how": "軸を `Z` に設定", "why": "ページの長手方向に沿って直角に湾曲させる。"}, {"num": "035", "title": "コーナー制御用頂点グループ作成", "how": "オブジェクトデータプロパティ > `頂点グループ` > `+` > `Hook_Corner`", "why": "紙の全体ではなく「指が掛かった先端角」だけを部分制御するため。"}, {"num": "036", "title": "コーナー頂点へのウェイト割り当て", "how": "編集モードで右下コーナー頂点群を選択 > ウェイト `1.0` (内側は `0.4`) で `割り当て`", "why": "先端が最も大きくめくれ上がり、根元に向かって滑らかに追従させる。"}, {"num": "037", "title": "制御用Empty（十字）の配置", "how": "ページの先端角にカーソル移動 > `Shift + A` > `エンプティ` > `十字 (Plain Axis)`", "why": "頂点グループを物理的に持ち上げるハンドル（リグ制御点）を作成。"}, {"num": "038", "title": "Hookモディファイアの追加とバインド", "how": "ページに `フック (Hook)` モディファイア追加 > オブジェクト: `Empty`、頂点グループ: `Hook_Corner`", "why": "Emptyを動かすことでページの角が先行してクイッとめくれ上がる動作を実現。"}, {"num": "039", "title": "フレーム1: 初期キーフレーム打ち", "how": "フレーム1へ移動 > ページの回転Y `0°` で `I` > Bend角度 `0°` で `I`", "why": "ページが右側で静止して閉じている初期ポーズを記録。"}, {"num": "040", "title": "フレーム15: めくり始めキーフレーム", "how": "フレーム15へ移動 > Emptyを `G + Z` で持ち上げ `I` > Bend角度 `-25°` で `I` > 回転Y `15°` で `I`", "why": "指が掛かって角だけがフワッと浮き上がる「予備動作」を記録。"}, {"num": "041", "title": "フレーム35: 最高到達点（最大しなり）キーフレーム", "how": "フレーム35へ移動 > ページの回転Y `90°` で `I` > Bend角度 `-60°` で `I`", "why": "ページが真上に立ち上がり、風圧と重力で最も大きくアーチ状にしなるクライマックスを記録。"}, {"num": "042", "title": "フレーム50: 着地直前キーフレーム", "how": "フレーム50へ移動 > ページの回転Y `165°` で `I` > Bend角度 `-15°` で `I`", "why": "紙のしなりが自然に解けて平らに戻りながら左側へ落ちていく減速を表現。"}, {"num": "043", "title": "フレーム60: 完全着地キーフレーム", "how": "フレーム60へ移動 > ページの回転Y `180°` で `I` > Bend角度 `0°` で `I`", "why": "左側のページ束の上にピタッと綺麗に落ち着く最終ポーズを記録。"}, {"num": "044", "title": "グラフエディタでのベジェ補間調整", "how": "`A` で全キーフレーム選択 > `T` > `ベジェ (Bézier)`", "why": "機械的な等速運動を排除し、風に乗った有機的な緩急（イージング）を付与。"}, {"num": "045", "title": "複数ページのオフセット複製", "how": "ページとEmptyを選択 > `Shift + D` > ドープシートでキーフレームを `+10F` 移動", "why": "前のページを追いかけるように次のページがパラパラめくれる連続感を演出。"}];
+    const CAMPFIRE_ATOMIC = [{"num": "001", "title": "初期オブジェクト全削除", "how": "`A` キーで全選択 > `X` > `Enter`", "why": "不要なデフォルトCube・ライト・カメラをクリアにし、ゼロから計算領域を組むため。"}, {"num": "002", "title": "UV球（発生源）の生成", "how": "`Shift + A` > `メッシュ` > `UV球 (UV Sphere)`", "why": "焚き火の火床となる全方位対称の熱源ボリュームを作成。"}, {"num": "003", "title": "UV球のスケール縮小", "how": "`S` > `0.4` 入力 > `Enter`", "why": "直径2mの初期サイズでは大爆発になるため、キャンプ用焚き火の火床サイズ（約40cm）に合わせる。"}, {"num": "004", "title": "スケールの適用", "how": "`Ctrl + A` > `スケール (Scale)`", "why": "オブジェクトスケールを 1.0 に固定し、今後の物理演算で発生距離が歪むのを防止。"}, {"num": "005", "title": "クイック煙（Quick Smoke）の適用", "how": "メニュー `オブジェクト` > `クイックエフェクト` > `クイック煙`", "why": "ドメイン（外枠バウンディングボックス）と初期ボリュームマテリアルを一発自動生成。"}, {"num": "006", "title": "乱流フォースフィールドの生成", "how": "`Shift + A` > `フォースフィールド` > `乱流 (Turbulence)`", "why": "上昇気流にランダムな渦を付与し、炎の先端をチラチラと揺らめかせる。"}, {"num": "007", "title": "乱流の強さ設定", "how": "物理演算プロパティ > `強さ (Strength): 0.4`", "why": "1.0以上だと炎が吹き散らされ、0.1だと直進しすぎるため、穏やかな焚き火の黄金比にする。"}, {"num": "008", "title": "乱流のノイズ量設定", "how": "物理演算プロパティ > `ノイズ量 (Noise Amount): 0.4`", "why": "気流の渦に多重スケールのムラを与え、大小様々なゆらぎを合成。"}, {"num": "009", "title": "発生源のフロータイプ変更", "how": "UV球選択 > 物理演算プロパティ > `フロータイプ: 火炎 (Fire)`", "why": "デフォルトの黒煙を止め、純粋な炎ガスのみを噴出させる。"}, {"num": "010", "title": "燃料（Fuel）の増量", "how": "`燃料: 2.0`", "why": "ガスの燃焼持続時間を伸ばし、炎が勢いよく上部まで立ち上るようにする。"}, {"num": "011", "title": "表面からの発生距離設定", "how": "フローソース > `表面からの発生距離: 1.0`", "why": "球の表面境界だけでなく周囲空間全体から均一にガスを発生させ、火の根元に厚みを出す。"}, {"num": "012", "title": "フローテクスチャの有効化", "how": "`テクスチャ (Texture)` にチェックを入れる", "why": "ツルッとした球体型の炎を壊し、ガス噴出箇所にムラ（千切れ）を作る。"}, {"num": "013", "title": "クラウド（Clouds）テクスチャ作成", "how": "テクスチャプロパティ > 新規 > タイプ: `クラウド (Clouds)`", "why": "自然界の煙・雲・炎の千切れパターンを生成するプロシージャルノイズ。"}, {"num": "014", "title": "テクスチャサイズ設定", "how": "テクスチャサイズ: `0.1`", "why": "炎の細かい筋に合わせた微小ノイズスケールにする。"}, {"num": "015", "title": "テクスチャコントラスト強調", "how": "色タブ > `コントラスト: 5.0`", "why": "「ガスが出る場所」と「出ない場所」の差を極端にし、炎が何筋にも千切れるようにする。"}, {"num": "016", "title": "UV球へテクスチャ割り当て", "how": "物理演算のテクスチャ欄で作成した Clouds を選択", "why": "エミッターの噴出量にコントラストノイズを反映。"}, {"num": "017", "title": "ドメイン解像度分割数設定", "how": "ドメイン選択 > `分割の解像度: 128` (テスト時は 64)", "why": "ボクセルを微細化し、炎のブロック状モザイク感を解消して滑らかな流体にする。"}, {"num": "018", "title": "適応ドメイン（Adaptive Domain）有効化", "how": "`適応ドメイン` にチェックを入れる", "why": "炎が存在する空間のみ計算領域を自動伸縮させ、メモリとベイク時間を大幅削減。"}, {"num": "019", "title": "渦度（Vorticity）設定", "how": "火炎タブ > `渦度: 0.1`", "why": "激しすぎる大渦を抑え、焚き火らしい穏やかな回転運動にする。"}, {"num": "020", "title": "反応速度（Burning Rate）設定", "how": "`反応速度: 1.0`", "why": "炎の燃え広がりと消滅のサイクルを焚き火の速度に同調させる。"}, {"num": "021", "title": "キャッシュタイプ変更", "how": "キャッシュタブ > `モジュール (Modular)` > `リジューム可` ON", "why": "ベイク途中で一時停止・再開を可能にし、クラッシュ時の復旧を担保。"}, {"num": "022", "title": "終了フレーム設定", "how": "`終了: 200`", "why": "ループ再生や観察に十分な約8秒間（24fps換算）のシミュレーション長を確保。"}, {"num": "023", "title": "データのベイク実行", "how": "`データをベイク (Bake Data)` をクリック", "why": "高負荷な流体計算をディスクに固定保存し、レンダリング時の安定性を確保。"}, {"num": "024", "title": "ワールド背景暗闇化", "how": "ワールドプロパティ > `カラー: 完全な黒 (0,0,0)`", "why": "炎の発光感が環境光で白飛びするのを防ぎ、闇夜のコントラストを際立たせる。"}, {"num": "025", "title": "レンダーエンジンをCyclesへ変更", "how": "レンダープロパティ > `Cycles` > `GPU` > `サンプル数: 64` > `デノイズ` ON", "why": "炎が薪や地面を物理的に照らし出す間接光（GI）を忠実にパストレーシング計算。"}, {"num": "026", "title": "ドメインシェーダーエディタを開く", "how": "ドメイン選択 > シェーダーエディタ表示", "why": "Principled Volume の内部ノードをカスタマイズするため。"}, {"num": "027", "title": "Attributeノード（heat）の追加", "how": "`Shift + A` > `入力` > `属性 (Attribute)` > 名前: `heat`", "why": "シミュレーション内部の熱量・温度データ（0〜1）を取り出す。"}, {"num": "028", "title": "放射強度ColorRampの作成", "how": "`Shift + A` > `カラーランプ` > `heat` の Fac を入力へ接続", "why": "温度に応じた発光強度のマッピングカーブを定義。"}, {"num": "029", "title": "濃いグレーキーの追加", "how": "カラーランプで `+` > 0.7 の位置に `濃いグレー (0.15)` を配置", "why": "芯の白熱ピークから表面に向かって滑らかにフェードアウトする減衰を作る。"}, {"num": "030", "title": "放射強度の50倍増幅", "how": "`Shift + A` > `数式 (乗算)` > 値: `50.0` を挟む", "why": "CyclesのHDR環境で十分な発光輝度を確保。"}, {"num": "031", "title": "Mappingノードへの#frameドライバ入力", "how": "`Shift + A` > `マッピング` > 位置Z欄に `#frame * 0.05` と入力", "why": "時間経過とともにノイズをZ軸上方向に自動スクロールさせる。"}, {"num": "032", "title": "細部Noise Textureの追加", "how": "`Shift + A` > `ノイズテクスチャ (Scale: 8, Detail: 9.2, Distort: 1)`", "why": "シミュレーションのメッシュ内部にチラチラ動く超微細な炎の繊維ディテールを合成。"}, {"num": "033", "title": "放射カラーColorRampの作成", "how": "新規カラーランプ > 左: `鮮やかなオレンジ`、右: `黄色` (オレンジを右寄りへ)", "why": "高温の芯（黄色）と外郭（オレンジ）の黄金グラデーションを構築。"}, {"num": "034", "title": "煙の完全消去（Density 0.0）", "how": "Principled Volume の `密度 (Density): 0.0`", "why": "微量に生じる黒煙（煤）を完全に透明化し、透き通るような美しい炎だけを抽出。"}, {"num": "035", "title": "薪クロス配置 ＆ 中心ポイントライト追加", "how": "炎の足元に薪を井桁配置 > 炎中心に `ポイントライト (850W, 暖色)` を配置", "why": "ボリューム発光のノイズを抑えつつ、薪の表面と地面をクリアかつ高速に照らし出す。"}];
+    const CRYSTAL_ATOMIC = [{"num": "001", "title": "Bmesh初期化", "how": "bm = bmesh.new()", "why": "プログラマブルに六角柱頂点を動的配置するため"}, {"num": "002", "title": "六角柱底面頂点生成", "how": "bm.verts.new(radius*cos(a), radius*sin(a), 0)", "why": "三方晶系/六方晶系の自然界の水晶の対称幾何学を形成"}, {"num": "003", "title": "80%柱部押し出し", "how": "bm.verts.new(x*0.95, y*0.95, h*0.8)", "why": "柱状結晶の垂直伸びを再現"}, {"num": "004", "title": "ピラミッド先端収束", "how": "bm.verts.new(offset_x, offset_y, h)", "why": "自然なオフセットを持つ先端錐体を形成"}, {"num": "005", "title": "ファセット維持", "how": "poly.use_smooth = False", "why": "宝石・結晶特有のシャープなカット面反射を表現"}, {"num": "006", "title": "物理屈折シェーダー設定", "how": "Principled BSDF > IOR: 1.544, Transmission: 0.92", "why": "石英ガラスの実測屈折率1.544による本物の光屈折"}];
 
     const CATALOG_DATA = [
       {
@@ -515,7 +587,7 @@
           title: "Blender Made Easy: Blender Tutorial - Book Opening Animation",
           url: "https://www.youtube.com/watch?v=geyC6FfMFf8"
         },
-        steps: BOOK_STEPS,
+        atomicSteps: BOOK_ATOMIC,
         soundMapping: [
           { slot: "Book_Cover_Leather_Mat", surface: "Leather", audio: "Sound_Book_Close_Thud", event: "本の開閉・バタンと閉じる重厚な革接触音" },
           { slot: "Book_Page_Paper_Mat", surface: "Paper", audio: "Sound_Page_Turn_Whoosh", event: "ページが風をはらんでめくれるパサッという紙音" },
@@ -542,7 +614,7 @@
           title: "カサハラ CG: 【Blender】初めての炎！【焚き火篇】リアルな炎を簡単に作れます！",
           url: "https://www.youtube.com/watch?v=lodqjYDXIxk"
         },
-        steps: KASAHARA_STEPS,
+        atomicSteps: CAMPFIRE_ATOMIC,
         soundMapping: [
           { slot: "Kasahara_Fire_Volume_Mat", surface: "Fire", audio: "Sound_Campfire_Loop", event: "リアル焚き火環境ループ音 (Wwise/ADX2)" },
           { slot: "Charred_Wood_Mat", surface: "Wood", audio: "Footstep_Wood_Charred", event: "炭化薪の接触音・足音" },
@@ -566,29 +638,7 @@
           title: "Blender Procedural Crystal Cluster Tutorial (Sacoche Ito & Mdesign 技法統合)",
           url: "https://www.youtube.com/results?search_query=blender+procedural+crystals"
         },
-        steps: [
-          {
-            step: 1,
-            title: "Bmesh による六角柱ピラミッド結晶のプログラマブル生成",
-            time: "Bmesh Algorithm",
-            how: "Segments=6 の底面頂点を配置し、高さ80%まで垂直押し出し後、先端トップ頂点に向かってピラミッド状に収束させて多面体を閉じる。",
-            why: "天然の水晶（石英）は三方晶系／六方晶系の幾何学的対称性を持つため、六角柱をベースにすることで自然界の結晶構造を物理的に再現できる。"
-          },
-          {
-            step: 2,
-            title: "放射状クラスタリング ＆ ファセット角の維持",
-            time: "Cluster Gen",
-            how: "中心の巨大結晶を軸に、周囲に10〜12本の結晶を15〜35度の外向き傾斜とランダム回転をつけて配置。poly.use_smooth = False を維持。",
-            why: "宝石や鉱石はカット面（ファセット）のエッジが鋭利に光を反射することで美しく見えるため、スムースシェードをあえてオフにする。"
-          },
-          {
-            step: 3,
-            title: "物理屈折率 (IOR 1.544) ＆ Transmission ガラスシェーダー",
-            time: "PBR Shader",
-            how: "Principled BSDF の IOR を 1.544（水晶の屈折率）、Transmission を 0.92、Roughness 0.08、微弱なEmissionを付与。",
-            why: "石英ガラスの実測屈折率 1.544 に設定することで、背後の光が本物の水晶と同じ比率で屈折・集光する。"
-          }
-        ],
+        atomicSteps: CRYSTAL_ATOMIC,
         soundMapping: [
           { slot: "Crystal_Gem_Mat", surface: "Crystal", audio: "Footstep_Glass", event: "高硬度クリスタル接触音・硬質反射" },
           { slot: "Base_Rock_Mat", surface: "Stone", audio: "Footstep_Stone", event: "硬い岩石の足音・破砕音" }
@@ -638,6 +688,7 @@
       });
     }
 
+    
     function renderDetail(item) {
       const detailContainer = document.getElementById("detail-view");
       
@@ -650,26 +701,18 @@
         </tr>
       `).join("");
 
-      const stepCards = item.steps.map(st => `
-        <div class="step-card">
-          <div class="step-head">
-            <div>
-              <span class="step-number">STEP ${st.step}</span>
-              <span class="step-title-text">${st.title}</span>
-            </div>
-            <span class="step-time">⏱ ${st.time}</span>
-          </div>
-          <div class="step-body">
-            <div class="step-how">
-              <div class="step-how-title">🛠 具体的操作手順 (How)</div>
-              <div>${st.how}</div>
-            </div>
-            <div class="step-why">
-              <div class="step-why-title">💡 その手順の意味・理由 (Why / 効果)</div>
-              <div>${st.why}</div>
-            </div>
-          </div>
-        </div>
+      const stepRows = (item.atomicSteps || []).map(st => `
+        <tr class="atomic-step-row">
+          <td class="step-num-col">#${st.num}</td>
+          <td class="step-how-col">
+            <div class="step-how-title">${st.title}</div>
+            <div class="step-how-cmd">${st.how}</div>
+          </td>
+          <td class="step-why-col">
+            <div class="why-tag">💡 なぜこの操作を行うのか (Why)</div>
+            <div>${st.why}</div>
+          </td>
+        </tr>
       `).join("");
 
       const cutThumbs = item.cuts.map((c, i) => `
@@ -691,7 +734,7 @@
           <div class="viewer-panel">
             <div class="panel-header-bar">
               <span>🎮 3D インタラクティブ (ドラッグ回転 / ホイール拡縮)</span>
-              <span class="badge badge-cyan" style="font-size:0.7rem;">CORS制限解除済み</span>
+              <span class="badge badge-cyan" style="font-size:0.7rem;">CORSフリー</span>
             </div>
             <div class="viewer-body">
               <model-viewer 
@@ -721,16 +764,20 @@
           </div>
         </div>
 
+        <!-- Atomic Step-by-Step Analysis (Most Important) -->
         <div class="section-card">
           <div class="section-title">
-            <span>🔬 全制作工程 ＆「その手順の意味・Why」の徹底分析</span>
+            <span>🔬 最小単位・全行程レシピ (Atomic Step-by-Step)</span>
+            <span class="badge" style="font-size:0.75rem;">全 ${(item.atomicSteps || []).length} 手番</span>
           </div>
           <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;">
-            動画内の単なるパラメータ値だけでなく、「なぜその形状なのか」「なぜその数値なのか」「なぜそのモディファイアを使うのか」の制作理論と物理背景を事細かに体系化しています。
+            キー入力・ショートカット・寸法入力レベルの最小単位で全行程を完全分解。1手ごとの操作（How）と、なぜその数値や操作を行うのか（Why）を事細かに記録しています。
           </p>
-          <div class="step-list">
-            ${stepCards}
-          </div>
+          <table class="atomic-step-table">
+            <tbody>
+              ${stepRows}
+            </tbody>
+          </table>
           <a class="source-link" href="${item.source.url}" target="_blank">
             🔗 一次情報チュートリアル元動画: ${item.source.title} ↗
           </a>
@@ -768,6 +815,7 @@
         </div>
       `;
     }
+
 
     function copyCode() {
       const code = document.getElementById("code-snippet").innerText;

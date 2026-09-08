@@ -1,11 +1,11 @@
 ﻿import json
 import base64
+import re
 from pathlib import Path
 
 BASE_DIR = Path(r"e:\BlenderPreFix")
 ASSETS_DIR = BASE_DIR / "catalog" / "assets"
 
-# Base64 読み込み
 with open(ASSETS_DIR / "kasahara_campfire.b64.txt", "r") as f:
     campfire_b64 = f.read().strip()
 
@@ -15,118 +15,42 @@ with open(ASSETS_DIR / "crystal_cluster.b64.txt", "r") as f:
 with open(ASSETS_DIR / "book_page_turn.b64.txt", "r") as f:
     book_b64 = f.read().strip()
 
-# 1. カサハラCG 焚き火ステップ
-kasahara_steps = [
-    {
-        "step": 1,
-        "title": "球体エミッターの追加 ＆ クイック煙の適用",
-        "time": "00:23 - 00:58",
-        "how": "初期オブジェクトを削除後、Shift+A で『UV球』を追加し Sキーで 0.4 に縮小。オブジェクトメニュー ＞ クイックエフェクト ＞『クイック煙』を実行。",
-        "why": "【球体の理由】焚き火の火床はある程度の体積を持った熱源であるため、全方位に均等に燃焼ガスを噴出させるのに最適。【0.4縮小の理由】デフォルトの直径2mだと大爆発になるため、キャンプ用焚き火の火床サイズ（直径約40cm）に合わせる。【クイック煙の理由】ドメイン（計算領域外枠）と初期ボリュームマテリアルが一発で自動生成され、面倒な初期設定を大幅短縮できる。"
-    },
-    {
-        "step": 2,
-        "title": "乱流フォースフィールド（Turbulence）の付加",
-        "time": "00:58 - 01:15",
-        "how": "Shift+A ＞ フォースフィールド ＞『乱流』を追加。物理演算プロパティで 強さ: 0.4、ノイズ量: 0.4 に設定。",
-        "why": "【無風の弊害】フォースが無いと熱気流が真上に垂直上昇するだけの不自然な円柱炎になる。【乱流の理由】一定方向の『風』ではなく、空間全域でランダムな渦を発生させる『乱流』を使うことで、炎の先端がチラチラと舞い上がる自然なゆらめきが生まれる。【0.4の理由】1.0以上だと吹き散らされて形が崩れ、0.1だと直線的すぎる。0.4が穏やかな焚き火の黄金比。"
-    },
-    {
-        "step": 3,
-        "title": "発生源（フロー）の詳細設定（火炎化 ＆ Cloudsテクスチャ）",
-        "time": "01:15 - 02:10",
-        "how": "球体のフロータイプを『火炎』に変更。燃料: 2.0、表面からの発生距離: 1.0。テクスチャにチェックを入れ『クラウド（Clouds）』テクスチャ（サイズ: 0.1, コントラスト: 5.0）を割り当て。",
-        "why": "【火炎化の理由】初期値の煙を止め、純粋な燃焼ガスシミュレーションに集中。【燃料2.0の理由】燃焼持続時間を伸ばし、炎が勢いよく上部まで伸びるようにする。【表面距離1.0の理由】球体内部〜周囲1mの空間からガスを発生させ火の根元に厚みを出す。【Cloudsテクスチャ（超重要）】ツルッとした球体型の炎を打破するため、高コントラストなノイズで『ガスが出る場所・出ない場所』の激しいムラを作り、幾筋にも千切れて立ち上る有機的な炎の形状を生み出す。"
-    },
-    {
-        "step": 4,
-        "title": "ドメインの解像度 ＆ 物理挙動チューニング",
-        "time": "02:10 - 03:01",
-        "how": "ドメインの『分割の解像度』を 128 に設定。『適応ドメイン』にチェック。火炎タブで『渦度』を 0.1、『反応速度』を 1.0 に設定。",
-        "why": "【解像度128の理由】ボクセルサイズを微細化し、炎のブロック状モザイク感を解消して滑らかな流体ディテールを再現。【適応ドメインの理由】炎が存在する空間のみバウンディングボックスを自動伸縮させ、無駄な空間計算を省きメモリ消費とベイク時間を大幅削減。【渦度0.1・反応速度1.0】激しい爆発ではなく、焚き火らしいゆったりとした渦巻き速度に抑える。"
-    },
-    {
-        "step": 5,
-        "title": "シミュレーションデータのベイク（事前計算）",
-        "time": "03:01 - 03:50",
-        "how": "キャッシュタイプを『モジュール』、リジューム可にチェック、終了フレームを 200 に設定し『データをベイク』を実行。",
-        "why": "【ベイクの必要性】流体計算は超高負荷なため、リアルタイム再生ではコマ落ちし正確な形状確認ができない。ディスクにフレームごとの物理データを固定保存することで、レンダリング時の安定性を担保。【リジューム可】途中でクラッシュしても中断したフレームから再開できる。"
-    },
-    {
-        "step": 6,
-        "title": "背景暗闇化 ＆ Cycles パストレーシング設定",
-        "time": "03:50 - 04:13",
-        "how": "ワールドカラーを完全な黒（RGB 0,0,0）に設定。レンダーエンジンを『Cycles』、デバイス『GPU』、サンプル数『64』、デノイズON。",
-        "why": "【黒背景の理由】炎は自発光オブジェクトであるため、周囲が明るいと発光感が白飛び・減衰する。暗闇にすることで鮮烈な炎のグラデーションを際立たせる。【Cyclesの理由】Eeveeでは難しい『炎の光が薪や地面を物理的に照らし出す間接光（GI）』をパストレーシングで忠実に計算するため。"
-    },
-    {
-        "step": 7,
-        "title": "Principled Volume 核心シェーダーの構築（heat属性 ＆ #frame）",
-        "time": "04:13 - 07:17",
-        "how": "ドメインのマテリアルで、Attributeノード（name: 'heat'）を追加。ColorRamp（黒→白→濃灰）× 50.0 に、Mapping（Z位置に #frame ドライバ）連動の Noise Texture（Scale 8, Detail 9.2, Distort 1）を乗算合成して放射強度へ接続。別ColorRamp（橙→黄）を放射色へ接続。Densityは0.0。",
-        "why": "【heat属性の役割】シミュレーション内部の熱量データ（0〜1）を取り出し、温度が高い中心部を強く発光させる。【濃灰を挟む理由】白の右に濃灰を置くことで、炎の芯がピーク発光し、表面に向かって滑らかに透明へフェードアウトする。【乗算50の理由】CyclesのHDR空間で十分な発光強度を確保。【#frameドライバ（神技法）】シミュレーションの動きに加え、シェーダー内部のノイズがZ軸方向に高速スクロールすることで、炎の内部にチラチラと動く超微細な繊維ディテールが付加される。"
-    },
-    {
-        "step": 8,
-        "title": "薪（土台）の配置 ＆ 炎中心ポイントライト ＆ 最終仕上げ",
-        "time": "07:17 - 10:48",
-        "how": "炎の足元に薪を井桁・円錐状にクロス配置。炎の中心やや高めに暖色ポイントライト（500〜850W）を配置。ドメインの Density を 0.0 にして煙を消去。",
-        "why": "【ポイントライト追加の理由】ボリューム自体の発光はCyclesでノイズ（ファイアフライ）が出やすく照り返し計算が重い。中心にライトを置くことで、薪の表面をクリアかつ高速に照らしドラマチックな陰影を作る。【Density 0.0の理由】微量に発生する黒煙（煤）を完全に透明化し、透き通るような美しい炎の光だけを抽出するため。"
-    }
+def parse_atomic_markdown(md_path):
+    content = Path(md_path).read_text(encoding="utf-8")
+    steps = []
+    # ## 001 - Title ...
+    matches = re.split(r'##\s+(\d+)\s+-\s+([^\n]+)', content)
+    for i in range(1, len(matches), 3):
+        num = matches[i]
+        title = matches[i+1].strip()
+        body = matches[i+2].strip()
+        
+        how_m = re.search(r'-\s+\*\*操作\*\*:\s+([^\n]+)', body)
+        why_m = re.search(r'-\s+\*\*Why\*\*:\s+([^\n]+)', body)
+        
+        how = how_m.group(1).strip() if how_m else ""
+        why = why_m.group(1).strip() if why_m else ""
+        
+        steps.append({
+            "num": num,
+            "title": title,
+            "how": how,
+            "why": why
+        })
+    return steps
+
+book_atomic = parse_atomic_markdown("knowledge/book_page_turn_atomic_steps.md")
+campfire_atomic = parse_atomic_markdown("knowledge/kasahara_campfire_atomic_steps.md")
+crystal_atomic = [
+    {"num": "001", "title": "Bmesh初期化", "how": "bm = bmesh.new()", "why": "プログラマブルに六角柱頂点を動的配置するため"},
+    {"num": "002", "title": "六角柱底面頂点生成", "how": "bm.verts.new(radius*cos(a), radius*sin(a), 0)", "why": "三方晶系/六方晶系の自然界の水晶の対称幾何学を形成"},
+    {"num": "003", "title": "80%柱部押し出し", "how": "bm.verts.new(x*0.95, y*0.95, h*0.8)", "why": "柱状結晶の垂直伸びを再現"},
+    {"num": "004", "title": "ピラミッド先端収束", "how": "bm.verts.new(offset_x, offset_y, h)", "why": "自然なオフセットを持つ先端錐体を形成"},
+    {"num": "005", "title": "ファセット維持", "how": "poly.use_smooth = False", "why": "宝石・結晶特有のシャープなカット面反射を表現"},
+    {"num": "006", "title": "物理屈折シェーダー設定", "how": "Principled BSDF > IOR: 1.544, Transmission: 0.92", "why": "石英ガラスの実測屈折率1.544による本物の光屈折"}
 ]
 
-# 2. 本の開閉＆めくりステップ
-book_steps = [
-    {
-        "step": 1,
-        "title": "背表紙（Spine）と表紙（Cover）のモデリング ＆ ピボット移動",
-        "time": "00:00 - 04:00",
-        "how": "Cubeから背表紙（Spine: 幅0.16, 縦2.2, 厚0.04）と左右のハードカバーを作成。左右カバーの原点（Origin）を『背表紙と接するエッジ』へ移動し、背表紙を親（Parent）に指定。",
-        "why": "【原点移動が必須の理由】中心のままだと表紙がその場で回転して背表紙から外れてしまう。エッジに原点を置くことで蝶番（ヒンジ）として綺麗にパカッと開閉できる。【親子付けの理由】背表紙を移動・回転させた際に、表紙や中身のページ全体が一体となって追従するリグの土台となる。"
-    },
-    {
-        "step": 2,
-        "title": "ページ束（厚みブロック）の配置",
-        "time": "04:00 - 06:30",
-        "how": "左右の表紙の内側に、開いた本の土台となる厚みのある用紙ブロック（厚さ0.1m）を配置。断面（小口）に積層バンプを付与。",
-        "why": "【全ページを作らない理由】数百枚のページを個別ポリゴン化するとデータが激重になる。大半の固定ページは1つのブロックとしてまとめ、めくるページだけを個別メッシュにすることで圧倒的な軽量化とリアリズムを両立させる。"
-    },
-    {
-        "step": 3,
-        "title": "めくりページ（Turning Page）の高密度細分化 ＆ 原点設定",
-        "time": "06:30 - 08:00",
-        "how": "平面（幅1.35, 縦2.05）を作成し、めくり方向（X軸）に32分割のループカットを入れる。原点（Origin）を綴じ目（X=0）に配置。",
-        "why": "【X軸高密度分割の理由】ポリゴン数が少ないと紙が板のまま折れてしまい、滑らかなアーチ状の湾曲ができない。【綴じ目原点の理由】180度めくれて反対側に倒れる際、背表紙からページが引っ張られたり突き抜けたりする破綻を防止する。"
-    },
-    {
-        "step": 4,
-        "title": "Simple Deform (Bend) モディファイアによる紙のしなり表現",
-        "time": "08:00 - 09:50",
-        "how": "Simple Deform Modifier を追加し、Type: Bend（曲げ）、Axis: Z に設定。角度（Angle）を 0° → -55° → 0° と変化させる。",
-        "why": "【回転だけではダメな理由】単なる回転では鉄板や下敷きを裏返すような硬い板に見える。【Bendの理由】ページが持ち上がる途中で先端が空気抵抗としなりで大きく湾曲し、着地に向かってフラットに戻る『紙の弾性と柔軟性』をたった1つのパラメータで完全制御できる。"
-    },
-    {
-        "step": 5,
-        "title": "Hook Modifier ＋ 頂点グループによる先端めくれ制御",
-        "time": "09:50 - 13:00",
-        "how": "ページのめくり角（コーナー頂点群）にグラデーションウェイトを割り当て、Hook Modifier を追加して Empty（制御点）にバインド。",
-        "why": "【人間のめくり動作の再現】紙をめくる時、全体が一斉に上がるのではなく『指が掛かった角（コーナー）が先行してめくれ上がり、後から全体がついてくる』。Hookを使うことで、この指先の物理動作を自然に再現できる。"
-    },
-    {
-        "step": 6,
-        "title": "回転と曲げのイージング複合キーフレーム設計",
-        "time": "13:00 - 16:00",
-        "how": "回転Y（0°→90°→180°）と Bend角度（0°→-55°→0°）のピークタイミングをわずかにオフセットし、ベジェイージングで補間。",
-        "why": "【緩急の重要性】等速直線運動（リニア）では機械的になる。離陸時はゆっくり、真上を素早く通過し、着地時にフワリと減速する緩急をつけることで、風をはらんでパサッとめくれる有機的な空気感が生まれる。"
-    },
-    {
-        "step": 7,
-        "title": "複数ページのオフセット複製（パラパラめくり）",
-        "time": "16:00 - 19:00",
-        "how": "ページを複製し、タイムライン上でキーフレームを8〜12フレーム後ろへずらして連続シーケンスを構築。",
-        "why": "【連続モーションの美しさ】前のページが倒れきる直前に次のページが追いかけてめくれ始めることで、魔法書や読書のようなリッチなモーショングラフィックスに昇華される。"
-    }
-]
+print(f"Loaded {len(book_atomic)} book steps, {len(campfire_atomic)} campfire steps.")
 
 html_template = f'''<!DOCTYPE html>
 <html lang="ja">
@@ -137,17 +61,18 @@ html_template = f'''<!DOCTYPE html>
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
   <style>
     :root {{
-      --bg-dark: #101216;
-      --bg-panel: #171922;
-      --bg-card: #202330;
-      --bg-card-hover: #282c3c;
+      --bg-dark: #0f1115;
+      --bg-panel: #161820;
+      --bg-card: #1e212b;
+      --bg-card-hover: #262a37;
       --accent: #ea7600; /* Blender Orange */
       --accent-hover: #ff8e24;
       --accent-cyan: #00d2ff;
       --accent-green: #10b981;
       --text-main: #f3f4f6;
       --text-muted: #9ca3af;
-      --border: #2d3142;
+      --border: #2b2f3e;
+      --border-accent: rgba(234, 118, 0, 0.4);
     }}
     * {{ box-sizing: border-box; margin: 0; padding: 0; }}
     body {{
@@ -214,7 +139,7 @@ html_template = f'''<!DOCTYPE html>
     }}
     /* Left Sidebar */
     .sidebar {{
-      width: 340px;
+      width: 330px;
       background: var(--bg-panel);
       border-right: 1px solid var(--border);
       display: flex;
@@ -440,85 +365,71 @@ html_template = f'''<!DOCTYPE html>
       gap: 8px;
     }}
 
-    /* Step-by-Step Deep Analysis Table/Cards */
-    .step-list {{
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+    /* Atomic Step-by-Step Table */
+    .atomic-step-table {{
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 8px;
     }}
-    .step-card {{
+    .atomic-step-row {{
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 16px;
-      transition: border-color 0.2s;
-    }}
-    .step-card:hover {{
-      border-color: rgba(234, 118, 0, 0.4);
-    }}
-    .step-head {{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }}
-    .step-number {{
-      background: var(--accent);
-      color: #fff;
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 4px;
-      margin-right: 8px;
-    }}
-    .step-title-text {{
-      font-size: 1.02rem;
-      font-weight: 700;
-      color: var(--text-main);
-    }}
-    .step-time {{
-      font-size: 0.75rem;
-      color: var(--accent-cyan);
-      font-family: monospace;
-      background: rgba(0, 210, 255, 0.1);
-      padding: 2px 8px;
-      border-radius: 4px;
-      border: 1px solid rgba(0, 210, 255, 0.2);
-    }}
-    .step-body {{
-      display: grid;
-      grid-template-columns: 1fr 1.3fr;
-      gap: 14px;
-      font-size: 0.88rem;
-      line-height: 1.55;
-    }}
-    .step-how {{
-      background: rgba(0,0,0,0.25);
-      border: 1px solid var(--border);
-      padding: 12px;
       border-radius: 6px;
+      transition: all 0.2s;
+    }}
+    .atomic-step-row:hover {{
+      background: var(--bg-card-hover);
+      border-color: var(--border-accent);
+    }}
+    .step-num-col {{
+      padding: 12px 14px;
+      width: 70px;
+      font-family: "Fira Code", monospace;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--accent);
+      border-radius: 6px 0 0 6px;
+      border-left: 3px solid var(--accent);
+      vertical-align: top;
+    }}
+    .step-how-col {{
+      padding: 12px 14px;
+      width: 45%;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      vertical-align: top;
     }}
     .step-how-title {{
-      font-size: 0.78rem;
-      color: var(--accent-cyan);
       font-weight: 700;
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      color: #fff;
+      margin-bottom: 4px;
     }}
-    .step-why {{
-      background: rgba(234, 118, 0, 0.05);
-      border: 1px solid rgba(234, 118, 0, 0.25);
-      padding: 12px;
-      border-radius: 6px;
+    .step-how-cmd {{
+      font-family: "Fira Code", Consolas, monospace;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid var(--border);
+      padding: 4px 8px;
+      border-radius: 4px;
+      color: var(--accent-cyan);
+      font-size: 0.82rem;
+      display: inline-block;
+      margin-top: 2px;
     }}
-    .step-why-title {{
-      font-size: 0.78rem;
+    .step-why-col {{
+      padding: 12px 14px;
+      font-size: 0.86rem;
+      line-height: 1.5;
+      color: #cfd3dc;
+      border-radius: 0 6px 6px 0;
+      vertical-align: top;
+      background: rgba(234, 118, 0, 0.03);
+    }}
+    .why-tag {{
+      display: inline-block;
+      font-size: 0.72rem;
       color: var(--accent);
       font-weight: 700;
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      margin-bottom: 4px;
     }}
 
     /* Audio Table */
@@ -607,7 +518,7 @@ html_template = f'''<!DOCTYPE html>
       <span class="badge">自走学習成果ポータル</span>
     </div>
     <div class="stats" id="catalog-stats">
-      登録スキル: 4件 | Blender 5.2.1 LTS | スタンドアロン動作
+      登録スキル: 4件 | Blender 5.2.1 LTS | 最小単位全工程完備
     </div>
   </header>
 
@@ -623,8 +534,9 @@ html_template = f'''<!DOCTYPE html>
   </div>
 
   <script>
-    const KASAHARA_STEPS = {json.dumps(kasahara_steps, ensure_ascii=False)};
-    const BOOK_STEPS = {json.dumps(book_steps, ensure_ascii=False)};
+    const BOOK_ATOMIC = {json.dumps(book_atomic, ensure_ascii=False)};
+    const CAMPFIRE_ATOMIC = {json.dumps(campfire_atomic, ensure_ascii=False)};
+    const CRYSTAL_ATOMIC = {json.dumps(crystal_atomic, ensure_ascii=False)};
 
     const CATALOG_DATA = [
       {{
@@ -645,7 +557,7 @@ html_template = f'''<!DOCTYPE html>
           title: "Blender Made Easy: Blender Tutorial - Book Opening Animation",
           url: "https://www.youtube.com/watch?v=geyC6FfMFf8"
         }},
-        steps: BOOK_STEPS,
+        atomicSteps: BOOK_ATOMIC,
         soundMapping: [
           {{ slot: "Book_Cover_Leather_Mat", surface: "Leather", audio: "Sound_Book_Close_Thud", event: "本の開閉・バタンと閉じる重厚な革接触音" }},
           {{ slot: "Book_Page_Paper_Mat", surface: "Paper", audio: "Sound_Page_Turn_Whoosh", event: "ページが風をはらんでめくれるパサッという紙音" }},
@@ -672,7 +584,7 @@ html_template = f'''<!DOCTYPE html>
           title: "カサハラ CG: 【Blender】初めての炎！【焚き火篇】リアルな炎を簡単に作れます！",
           url: "https://www.youtube.com/watch?v=lodqjYDXIxk"
         }},
-        steps: KASAHARA_STEPS,
+        atomicSteps: CAMPFIRE_ATOMIC,
         soundMapping: [
           {{ slot: "Kasahara_Fire_Volume_Mat", surface: "Fire", audio: "Sound_Campfire_Loop", event: "リアル焚き火環境ループ音 (Wwise/ADX2)" }},
           {{ slot: "Charred_Wood_Mat", surface: "Wood", audio: "Footstep_Wood_Charred", event: "炭化薪の接触音・足音" }},
@@ -696,29 +608,7 @@ html_template = f'''<!DOCTYPE html>
           title: "Blender Procedural Crystal Cluster Tutorial (Sacoche Ito & Mdesign 技法統合)",
           url: "https://www.youtube.com/results?search_query=blender+procedural+crystals"
         }},
-        steps: [
-          {{
-            step: 1,
-            title: "Bmesh による六角柱ピラミッド結晶のプログラマブル生成",
-            time: "Bmesh Algorithm",
-            how: "Segments=6 の底面頂点を配置し、高さ80%まで垂直押し出し後、先端トップ頂点に向かってピラミッド状に収束させて多面体を閉じる。",
-            why: "天然の水晶（石英）は三方晶系／六方晶系の幾何学的対称性を持つため、六角柱をベースにすることで自然界の結晶構造を物理的に再現できる。"
-          }},
-          {{
-            step: 2,
-            title: "放射状クラスタリング ＆ ファセット角の維持",
-            time: "Cluster Gen",
-            how: "中心の巨大結晶を軸に、周囲に10〜12本の結晶を15〜35度の外向き傾斜とランダム回転をつけて配置。poly.use_smooth = False を維持。",
-            why: "宝石や鉱石はカット面（ファセット）のエッジが鋭利に光を反射することで美しく見えるため、スムースシェードをあえてオフにする。"
-          }},
-          {{
-            step: 3,
-            title: "物理屈折率 (IOR 1.544) ＆ Transmission ガラスシェーダー",
-            time: "PBR Shader",
-            how: "Principled BSDF の IOR を 1.544（水晶の屈折率）、Transmission を 0.92、Roughness 0.08、微弱なEmissionを付与。",
-            why: "石英ガラスの実測屈折率 1.544 に設定することで、背後の光が本物の水晶と同じ比率で屈折・集光する。"
-          }}
-        ],
+        atomicSteps: CRYSTAL_ATOMIC,
         soundMapping: [
           {{ slot: "Crystal_Gem_Mat", surface: "Crystal", audio: "Footstep_Glass", event: "高硬度クリスタル接触音・硬質反射" }},
           {{ slot: "Base_Rock_Mat", surface: "Stone", audio: "Footstep_Stone", event: "硬い岩石の足音・破砕音" }}
@@ -780,26 +670,18 @@ html_template = f'''<!DOCTYPE html>
         </tr>
       `).join("");
 
-      const stepCards = item.steps.map(st => `
-        <div class="step-card">
-          <div class="step-head">
-            <div>
-              <span class="step-number">STEP ${{st.step}}</span>
-              <span class="step-title-text">${{st.title}}</span>
-            </div>
-            <span class="step-time">⏱ ${{st.time}}</span>
-          </div>
-          <div class="step-body">
-            <div class="step-how">
-              <div class="step-how-title">🛠 具体的操作手順 (How)</div>
-              <div>${{st.how}}</div>
-            </div>
-            <div class="step-why">
-              <div class="step-why-title">💡 その手順の意味・理由 (Why / 効果)</div>
-              <div>${{st.why}}</div>
-            </div>
-          </div>
-        </div>
+      const stepRows = (item.atomicSteps || []).map(st => `
+        <tr class="atomic-step-row">
+          <td class="step-num-col">#${{st.num}}</td>
+          <td class="step-how-col">
+            <div class="step-how-title">${{st.title}}</div>
+            <div class="step-how-cmd">${{st.how}}</div>
+          </td>
+          <td class="step-why-col">
+            <div class="why-tag">💡 なぜこの操作を行うのか (Why)</div>
+            <div>${{st.why}}</div>
+          </td>
+        </tr>
       `).join("");
 
       const cutThumbs = item.cuts.map((c, i) => `
@@ -821,7 +703,7 @@ html_template = f'''<!DOCTYPE html>
           <div class="viewer-panel">
             <div class="panel-header-bar">
               <span>🎮 3D インタラクティブ (ドラッグ回転 / ホイール拡縮)</span>
-              <span class="badge badge-cyan" style="font-size:0.7rem;">CORS制限解除済み</span>
+              <span class="badge badge-cyan" style="font-size:0.7rem;">CORSフリー</span>
             </div>
             <div class="viewer-body">
               <model-viewer 
@@ -851,21 +733,26 @@ html_template = f'''<!DOCTYPE html>
           </div>
         </div>
 
+        <!-- Atomic Step-by-Step Analysis (Most Important) -->
         <div class="section-card">
           <div class="section-title">
-            <span>🔬 全制作工程 ＆「その手順の意味・Why」の徹底分析</span>
+            <span>🔬 最小単位・全行程レシピ (Atomic Step-by-Step)</span>
+            <span class="badge" style="font-size:0.75rem;">全 ${(item.atomicSteps || []).length} 手番</span>
           </div>
           <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;">
-            動画内の単なるパラメータ値だけでなく、「なぜその形状なのか」「なぜその数値なのか」「なぜそのモディファイアを使うのか」の制作理論と物理背景を事細かに体系化しています。
+            キー入力・ショートカット・寸法入力レベルの最小単位で全行程を完全分解。1手ごとの操作（How）と、なぜその数値や操作を行うのか（Why）を事細かに記録しています。
           </p>
-          <div class="step-list">
-            ${{stepCards}}
-          </div>
+          <table class="atomic-step-table">
+            <tbody>
+              ${{stepRows}}
+            </tbody>
+          </table>
           <a class="source-link" href="${{item.source.url}}" target="_blank">
             🔗 一次情報チュートリアル元動画: ${{item.source.title}} ↗
           </a>
         </div>
 
+        <!-- Audio & Surface ID Section -->
         <div class="section-card">
           <div class="section-title">🔊 ゲームエンジン ＆ サウンド連動仕様 (Wwise / CRI / Unity / UE)</div>
           <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">
@@ -886,6 +773,7 @@ html_template = f'''<!DOCTYPE html>
           </table>
         </div>
 
+        <!-- One-Click Code Section -->
         <div class="section-card">
           <div class="section-title">⚡ 一発生成コード (One-Click Python Generator)</div>
           <div class="code-container">
@@ -919,7 +807,6 @@ html_template = f'''<!DOCTYPE html>
       renderList(filtered);
     }}
 
-    // Initial render
     renderList(CATALOG_DATA);
     renderDetail(currentItem);
   </script>
@@ -931,5 +818,5 @@ output_path = BASE_DIR / "catalog" / "index.html"
 with open(output_path, "w", encoding="utf-8") as f:
     f.write(html_template)
 
-print(f"Successfully generated updated catalog at: {output_path}")
+print(f"Successfully generated ultimate atomic catalog at: {output_path}")
 print(f"HTML File Size: {output_path.stat().st_size / 1024:.1f} KB")
