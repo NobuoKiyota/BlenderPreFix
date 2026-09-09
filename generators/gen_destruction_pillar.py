@@ -131,55 +131,252 @@ def set_active(obj):
 # ------------------------------------------------------------------------------
 # 🎨 1. マテリアル生成
 # ------------------------------------------------------------------------------
+def enable_cycles_displacement(mat):
+    """Blender 3.6〜5.2全対応: 真の頂点変形（Displacement and Bump）を有効化"""
+    if hasattr(mat, "displacement_method"):
+        try:
+            mat.displacement_method = 'BOTH'
+            return
+        except Exception:
+            try:
+                mat.displacement_method = 'DISPLACEMENT_AND_BUMP'
+                return
+            except Exception:
+                pass
+    if hasattr(mat, "cycles") and hasattr(mat.cycles, "displacement_method"):
+        try:
+            mat.cycles.displacement_method = 'DISPLACEMENT_AND_BUMP'
+        except Exception:
+            try:
+                mat.cycles.displacement_method = 'BOTH'
+            except Exception:
+                pass
+
 def create_brick_material():
     mat = bpy.data.materials.new(name="Mat_RedBrick")
     mat.use_nodes = True
+    enable_cycles_displacement(mat)
     nodes = mat.node_tree.nodes
-    bsdf = nodes.get("Principled BSDF")
-    if bsdf:
-        bsdf.inputs['Base Color'].default_value = (0.62, 0.24, 0.15, 1.0)
-        bsdf.inputs['Roughness'].default_value = 0.88
+    links = mat.node_tree.links
+    nodes.clear()
+
+    out = nodes.new(type='ShaderNodeOutputMaterial')
+    bsdf = nodes.new(type='ShaderNodeBsdfPrincipled')
+    tex_coord = nodes.new(type='ShaderNodeTexCoord')
+    mapping = nodes.new(type='ShaderNodeMapping')
+    mapping.inputs['Scale'].default_value = (4.0, 4.0, 4.0)
+
+    noise_color = nodes.new(type='ShaderNodeTexNoise')
+    noise_color.inputs['Scale'].default_value = 12.0
+    noise_color.inputs['Detail'].default_value = 6.0
+    noise_color.inputs['Roughness'].default_value = 0.65
+
+    ramp_color = nodes.new(type='ShaderNodeValToRGB')
+    ramp_color.color_ramp.elements[0].position = 0.3
+    ramp_color.color_ramp.elements[0].color = (0.42, 0.12, 0.08, 1.0)
+    ramp_color.color_ramp.elements[1].position = 0.8
+    ramp_color.color_ramp.elements[1].color = (0.68, 0.28, 0.16, 1.0)
+
+    tex_voronoi = nodes.new(type='ShaderNodeTexVoronoi')
+    tex_voronoi.inputs['Scale'].default_value = 28.0
+
+    bump = nodes.new(type='ShaderNodeBump')
+    bump.inputs['Strength'].default_value = 0.35
+    bump.inputs['Distance'].default_value = 0.04
+
+    disp = nodes.new(type='ShaderNodeDisplacement')
+    disp.inputs['Scale'].default_value = 0.015
+    disp.inputs['Midlevel'].default_value = 0.5
+
+    links.new(tex_coord.outputs['Object'], mapping.inputs['Vector'])
+    links.new(mapping.outputs['Vector'], noise_color.inputs['Vector'])
+    links.new(mapping.outputs['Vector'], tex_voronoi.inputs['Vector'])
+
+    links.new(noise_color.outputs['Fac'], ramp_color.inputs['Fac'])
+    links.new(ramp_color.outputs['Color'], bsdf.inputs['Base Color'])
+    bsdf.inputs['Roughness'].default_value = 0.85
+
+    links.new(tex_voronoi.outputs['Distance'], bump.inputs['Height'])
+    links.new(bump.outputs['Normal'], bsdf.inputs['Normal'])
+
+    links.new(noise_color.outputs['Fac'], disp.inputs['Height'])
+    links.new(disp.outputs['Displacement'], out.inputs['Displacement'])
+    links.new(bsdf.outputs['BSDF'], out.inputs['Surface'])
     return mat
 
 def create_mortar_material():
     mat = bpy.data.materials.new(name="Mat_Mortar_Plaster")
     mat.use_nodes = True
+    enable_cycles_displacement(mat)
     nodes = mat.node_tree.nodes
-    bsdf = nodes.get("Principled BSDF")
-    if bsdf:
-        bsdf.inputs['Base Color'].default_value = (0.75, 0.73, 0.70, 1.0)
-        bsdf.inputs['Roughness'].default_value = 0.95
+    links = mat.node_tree.links
+    nodes.clear()
+
+    out = nodes.new(type='ShaderNodeOutputMaterial')
+    bsdf = nodes.new(type='ShaderNodeBsdfPrincipled')
+    tex_coord = nodes.new(type='ShaderNodeTexCoord')
+    mapping = nodes.new(type='ShaderNodeMapping')
+    mapping.inputs['Scale'].default_value = (8.0, 8.0, 8.0)
+
+    noise = nodes.new(type='ShaderNodeTexNoise')
+    noise.inputs['Scale'].default_value = 24.0
+    noise.inputs['Detail'].default_value = 8.0
+
+    ramp = nodes.new(type='ShaderNodeValToRGB')
+    ramp.color_ramp.elements[0].position = 0.2
+    ramp.color_ramp.elements[0].color = (0.68, 0.66, 0.63, 1.0)
+    ramp.color_ramp.elements[1].position = 0.8
+    ramp.color_ramp.elements[1].color = (0.80, 0.78, 0.75, 1.0)
+
+    bump = nodes.new(type='ShaderNodeBump')
+    bump.inputs['Strength'].default_value = 0.25
+    bump.inputs['Distance'].default_value = 0.02
+
+    disp = nodes.new(type='ShaderNodeDisplacement')
+    disp.inputs['Scale'].default_value = 0.008
+
+    links.new(tex_coord.outputs['Object'], mapping.inputs['Vector'])
+    links.new(mapping.outputs['Vector'], noise.inputs['Vector'])
+    links.new(noise.outputs['Fac'], ramp.inputs['Fac'])
+    links.new(ramp.outputs['Color'], bsdf.inputs['Base Color'])
+    bsdf.inputs['Roughness'].default_value = 0.95
+
+    links.new(noise.outputs['Fac'], bump.inputs['Height'])
+    links.new(bump.outputs['Normal'], bsdf.inputs['Normal'])
+
+    links.new(noise.outputs['Fac'], disp.inputs['Height'])
+    links.new(disp.outputs['Displacement'], out.inputs['Displacement'])
+    links.new(bsdf.outputs['BSDF'], out.inputs['Surface'])
     return mat
 
 def create_outer_stone_material():
     mat = bpy.data.materials.new(name="Mat_Pillar_Stone")
     mat.use_nodes = True
+    enable_cycles_displacement(mat)
     nodes = mat.node_tree.nodes
-    bsdf = nodes.get("Principled BSDF")
-    if bsdf:
-        bsdf.inputs['Base Color'].default_value = (0.72, 0.69, 0.65, 1.0)
-        bsdf.inputs['Roughness'].default_value = 0.85
+    links = mat.node_tree.links
+    nodes.clear()
+
+    out = nodes.new(type='ShaderNodeOutputMaterial')
+    bsdf = nodes.new(type='ShaderNodeBsdfPrincipled')
+    tex_coord = nodes.new(type='ShaderNodeTexCoord')
+    mapping = nodes.new(type='ShaderNodeMapping')
+    mapping.inputs['Scale'].default_value = (3.0, 3.0, 3.0)
+
+    noise = nodes.new(type='ShaderNodeTexNoise')
+    noise.inputs['Scale'].default_value = 8.0
+    noise.inputs['Detail'].default_value = 6.0
+
+    ramp = nodes.new(type='ShaderNodeValToRGB')
+    ramp.color_ramp.elements[0].position = 0.3
+    ramp.color_ramp.elements[0].color = (0.64, 0.61, 0.57, 1.0)
+    ramp.color_ramp.elements[1].position = 0.85
+    ramp.color_ramp.elements[1].color = (0.78, 0.75, 0.72, 1.0)
+
+    bump = nodes.new(type='ShaderNodeBump')
+    bump.inputs['Strength'].default_value = 0.30
+    bump.inputs['Distance'].default_value = 0.03
+
+    disp = nodes.new(type='ShaderNodeDisplacement')
+    disp.inputs['Scale'].default_value = 0.012
+
+    links.new(tex_coord.outputs['Object'], mapping.inputs['Vector'])
+    links.new(mapping.outputs['Vector'], noise.inputs['Vector'])
+    links.new(noise.outputs['Fac'], ramp.inputs['Fac'])
+    links.new(ramp.outputs['Color'], bsdf.inputs['Base Color'])
+    bsdf.inputs['Roughness'].default_value = 0.82
+
+    links.new(noise.outputs['Fac'], bump.inputs['Height'])
+    links.new(bump.outputs['Normal'], bsdf.inputs['Normal'])
+
+    links.new(noise.outputs['Fac'], disp.inputs['Height'])
+    links.new(disp.outputs['Displacement'], out.inputs['Displacement'])
+    links.new(bsdf.outputs['BSDF'], out.inputs['Surface'])
     return mat
 
 def create_inner_chipped_material():
     mat = bpy.data.materials.new(name="Mat_Chipped_Interior")
     mat.use_nodes = True
+    enable_cycles_displacement(mat)
     nodes = mat.node_tree.nodes
-    bsdf = nodes.get("Principled BSDF")
-    if bsdf:
-        bsdf.inputs['Base Color'].default_value = (0.42, 0.38, 0.35, 1.0)
-        bsdf.inputs['Roughness'].default_value = 0.92
+    links = mat.node_tree.links
+    nodes.clear()
+
+    out = nodes.new(type='ShaderNodeOutputMaterial')
+    bsdf = nodes.new(type='ShaderNodeBsdfPrincipled')
+    tex_coord = nodes.new(type='ShaderNodeTexCoord')
+    mapping = nodes.new(type='ShaderNodeMapping')
+    mapping.inputs['Scale'].default_value = (5.0, 5.0, 5.0)
+
+    voronoi = nodes.new(type='ShaderNodeTexVoronoi')
+    voronoi.inputs['Scale'].default_value = 14.0
+
+    noise = nodes.new(type='ShaderNodeTexNoise')
+    noise.inputs['Scale'].default_value = 32.0
+    noise.inputs['Detail'].default_value = 8.0
+    noise.inputs['Roughness'].default_value = 0.7
+
+    ramp = nodes.new(type='ShaderNodeValToRGB')
+    ramp.color_ramp.elements[0].position = 0.25
+    ramp.color_ramp.elements[0].color = (0.32, 0.29, 0.27, 1.0)
+    ramp.color_ramp.elements[1].position = 0.75
+    ramp.color_ramp.elements[1].color = (0.58, 0.55, 0.52, 1.0)
+
+    bump = nodes.new(type='ShaderNodeBump')
+    bump.inputs['Strength'].default_value = 0.70
+    bump.inputs['Distance'].default_value = 0.08
+
+    disp = nodes.new(type='ShaderNodeDisplacement')
+    disp.inputs['Scale'].default_value = 0.035
+
+    links.new(tex_coord.outputs['Object'], mapping.inputs['Vector'])
+    links.new(mapping.outputs['Vector'], voronoi.inputs['Vector'])
+    links.new(mapping.outputs['Vector'], noise.inputs['Vector'])
+
+    links.new(noise.outputs['Fac'], ramp.inputs['Fac'])
+    links.new(ramp.outputs['Color'], bsdf.inputs['Base Color'])
+    bsdf.inputs['Roughness'].default_value = 0.92
+
+    links.new(voronoi.outputs['Distance'], bump.inputs['Height'])
+    links.new(bump.outputs['Normal'], bsdf.inputs['Normal'])
+
+    links.new(voronoi.outputs['Distance'], disp.inputs['Height'])
+    links.new(disp.outputs['Displacement'], out.inputs['Displacement'])
+    links.new(bsdf.outputs['BSDF'], out.inputs['Surface'])
     return mat
 
 def create_cannonball_material():
     mat = bpy.data.materials.new(name="Mat_CannonBall")
     mat.use_nodes = True
+    enable_cycles_displacement(mat)
     nodes = mat.node_tree.nodes
-    bsdf = nodes.get("Principled BSDF")
-    if bsdf:
-        bsdf.inputs['Base Color'].default_value = (0.12, 0.12, 0.14, 1.0)
-        bsdf.inputs['Metallic'].default_value = 0.92
-        bsdf.inputs['Roughness'].default_value = 0.28
+    links = mat.node_tree.links
+    nodes.clear()
+
+    out = nodes.new(type='ShaderNodeOutputMaterial')
+    bsdf = nodes.new(type='ShaderNodeBsdfPrincipled')
+    tex_coord = nodes.new(type='ShaderNodeTexCoord')
+    mapping = nodes.new(type='ShaderNodeMapping')
+    mapping.inputs['Scale'].default_value = (6.0, 6.0, 6.0)
+
+    noise = nodes.new(type='ShaderNodeTexNoise')
+    noise.inputs['Scale'].default_value = 45.0
+    noise.inputs['Detail'].default_value = 8.0
+
+    bump = nodes.new(type='ShaderNodeBump')
+    bump.inputs['Strength'].default_value = 0.12
+    bump.inputs['Distance'].default_value = 0.01
+
+    links.new(tex_coord.outputs['Object'], mapping.inputs['Vector'])
+    links.new(mapping.outputs['Vector'], noise.inputs['Vector'])
+
+    bsdf.inputs['Base Color'].default_value = (0.12, 0.12, 0.14, 1.0)
+    bsdf.inputs['Metallic'].default_value = 0.94
+    bsdf.inputs['Roughness'].default_value = 0.32
+
+    links.new(noise.outputs['Fac'], bump.inputs['Height'])
+    links.new(bump.outputs['Normal'], bsdf.inputs['Normal'])
+    links.new(bsdf.outputs['BSDF'], out.inputs['Surface'])
     return mat
 
 def create_spark_material():
