@@ -731,7 +731,10 @@ def build_ground_shape(outer_mat, inner_mat):
 # ------------------------------------------------------------------------------
 def fracture_and_setup_physics(target_obj, shape_type, seed_val):
     ensure_cell_fracture_addon()
+    target_name = target_obj.name
     set_active(target_obj)
+
+    pre_names = {o.name for o in bpy.context.scene.objects}
 
     random.seed(seed_val)
     print(f"🔨 Fracturing {shape_type} into high-density shards (Seed: {seed_val})...")
@@ -746,29 +749,45 @@ def fracture_and_setup_physics(target_obj, shape_type, seed_val):
         use_remove_original=True
     )
 
-    shards = [o for o in bpy.context.scene.objects if 'cell' in o.name.lower()]
-    print(f"✅ Generated {len(shards)} high-density fracture shards for {shape_type}!")
+    new_names = [o.name for o in bpy.context.scene.objects if o.name not in pre_names]
+    if not new_names:
+        new_names = [o.name for o in bpy.context.scene.objects if 'cell' in o.name.lower()]
 
     # 元の非破砕オブジェクトが残存している場合は確実に削除
-    if target_obj.name in bpy.data.objects:
-        bpy.data.objects.remove(target_obj, do_unlink=True)
+    if target_name in bpy.data.objects:
+        old_obj = bpy.data.objects.get(target_name)
+        if old_obj:
+            bpy.data.objects.remove(old_obj, do_unlink=True)
+
+    # 生存しているオブジェクト参照のみを再取得
+    shards = []
+    for name in new_names:
+        obj = bpy.data.objects.get(name)
+        if obj and obj.name != target_name:
+            shards.append(obj)
+
+    print(f"✅ Generated {len(shards)} high-density fracture shards for {shape_type}!")
 
     for s in shards:
-        bpy.context.view_layer.objects.active = s
         if not s.rigid_body:
-            bpy.ops.rigidbody.object_add(type='ACTIVE')
-        s.rigid_body.collision_shape = 'CONVEX_HULL'
-        s.rigid_body.mass = 4.5
-        s.rigid_body.friction = 0.60
-        s.rigid_body.restitution = 0.40
-        s.rigid_body.linear_damping = 0.01
-        s.rigid_body.angular_damping = 0.01
+            try:
+                s.rigid_body_create(type='ACTIVE')
+            except Exception:
+                bpy.context.view_layer.objects.active = s
+                bpy.ops.rigidbody.object_add(type='ACTIVE')
+        if s.rigid_body:
+            s.rigid_body.collision_shape = 'CONVEX_HULL'
+            s.rigid_body.mass = 4.5
+            s.rigid_body.friction = 0.60
+            s.rigid_body.restitution = 0.40
+            s.rigid_body.linear_damping = 0.01
+            s.rigid_body.angular_damping = 0.01
 
-        s.rigid_body.kinematic = True
-        s.keyframe_insert(data_path='rigid_body.kinematic', frame=1)
-        s.keyframe_insert(data_path='rigid_body.kinematic', frame=7)
-        s.rigid_body.kinematic = False
-        s.keyframe_insert(data_path='rigid_body.kinematic', frame=8)
+            s.rigid_body.kinematic = True
+            s.keyframe_insert(data_path='rigid_body.kinematic', frame=1)
+            s.keyframe_insert(data_path='rigid_body.kinematic', frame=7)
+            s.rigid_body.kinematic = False
+            s.keyframe_insert(data_path='rigid_body.kinematic', frame=8)
 
     bpy.ops.object.select_all(action='DESELECT')
     for s in shards:

@@ -1,0 +1,22 @@
+schema_version = "1.0.0"
+
+id = "destruction_toolkit"
+version = "0.1.0"
+name = "Destruction Toolkit"
+tagline = "Place, fracture and collapse any object by impact or gravity"
+maintainer = "saku99atm5 <saku99atm5@gmail.com>"
+type = "add-on"
+
+blender_version_min = "4.2.0"
+
+license = [
+  "SPDX:GPL-3.0-or-later",
+]
+
+# Bundles a vendored copy of Blender's own "Cell Fracture" add-on
+# (vendor/object_fracture_cell, SPDX-License-Identifier: GPL-2.0-or-later,
+# authors: ideasman42, phymec, Sergey Sharybin) so this add-on is self
+# contained and does not depend on a sibling project folder being present.
+# No external textures/meshes are bundled; all materials/geometry are
+# generated procedurally at runtime.
+category = "3D View"
